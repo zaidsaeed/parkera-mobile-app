@@ -1,18 +1,21 @@
-import 'package:flutter/material.dart';
 import './signup.dart';
+import 'package:flutter/material.dart';
+import "package:graphql_flutter/graphql_flutter.dart";
+import "services/graphqlConf.dart";
 
-void main() => runApp(MyApp());
+GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
+void main() => runApp(
+      GraphQLProvider(
+        client: graphQLConfiguration.client,
+        child: CacheProvider(child: MyApp()),
+      ),
+    );
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return MaterialApp(home: Scaffold(body: SignUp()));
   }
 }

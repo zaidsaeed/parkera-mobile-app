@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
+import './gqlcaller.dart';
+
 class SignUp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -141,6 +143,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   )),
+              GqlCaller()
               // SizedBox(height: 15.0),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,4 @@
-import './signup.dart';
+import './landing.dart';
 import 'package:flutter/material.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
 import "services/graphqlConf.dart";
@@ -15,7 +15,6 @@ void main() => runApp(
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(home: Scaffold(body: SignUp()));
+    return MaterialApp(home: Scaffold(body: Landing()));
   }
 }

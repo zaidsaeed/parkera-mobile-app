@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-
-import './gqlcaller.dart';
+import 'package:parkera/home.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -143,7 +142,19 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   )),
-              GqlCaller()
+              Center(
+                child: FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
+                  child: Text(
+                    "Navigate To Homepage",
+                  ),
+                ),
+              )
               // SizedBox(height: 15.0),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,

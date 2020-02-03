@@ -1,17 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:parkera/home.dart';
 
+import './gqlcaller.dart';
 
-class SignUp extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SignUpState();
+    return _LoginState();
   }
 }
 
-class _SignUpState extends State<SignUp> {
-  Map<String, String> _userInfo = new Map<String, String>();
+class _LoginState extends State<Login> {
+  Map<String, String> _AccountInfo = new Map<String, String>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +26,9 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                       child: Text(
-                        'Signup',
+                        'Log In',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(260.0, 125.0, 0.0, 0.0),
-                      child: Text(
-                        '.',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green),
                       ),
                     )
                   ],
@@ -51,9 +41,9 @@ class _SignUpState extends State<SignUp> {
                       TextField(
                         onChanged: (text) {
                           setState(() {
-                            _userInfo["email"] = text;
+                            _AccountInfo["email"] = text;
                           });
-                          print(_userInfo);
+                          print(_AccountInfo);
                         },
                         decoration: InputDecoration(
                             labelText: 'EMAIL',
@@ -70,9 +60,9 @@ class _SignUpState extends State<SignUp> {
                       TextField(
                         onChanged: (text) {
                           setState(() {
-                            _userInfo["password"] = text;
+                            _AccountInfo["password"] = text;
                           });
-                          print(_userInfo);
+                          print(_AccountInfo);
                         },
                         decoration: InputDecoration(
                             labelText: 'PASSWORD ',
@@ -107,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                               onTap: () {},
                               child: Center(
                                 child: Text(
-                                  'SIGNUP',
+                                  'Login',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -140,44 +130,10 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-
                       ),
                     ],
                   )),
-              Center(
-                child: FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                  },
-                  child: Text(
-                    "Navigate To Homepage",
-                  ),
-                ),
-              )
-              // SizedBox(height: 15.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     Text(
-              //       'New to Spotify?',
-              //       style: TextStyle(
-              //         fontFamily: 'Montserrat',
-              //       ),
-              //     ),
-              //     SizedBox(width: 5.0),
-              //     InkWell(
-              //       child: Text('Register',
-              //           style: TextStyle(
-              //               color: Colors.green,
-              //               fontFamily: 'Montserrat',
-              //               fontWeight: FontWeight.bold,
-              //               decoration: TextDecoration.underline)),
-              //     )
-              //   ],
-              // )
+              GqlCaller()
             ]));
   }
 }

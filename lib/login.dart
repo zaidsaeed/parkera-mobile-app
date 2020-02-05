@@ -133,7 +133,7 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   )),
-              GqlCaller()
+              // GqlCaller()
             ]));
   }
 }

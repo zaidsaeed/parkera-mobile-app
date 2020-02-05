@@ -2,15 +2,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
 
-
-class SignUp extends StatefulWidget {
+class SignUp1 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SignUpState();
+    return _SignUpState1();
   }
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState1 extends State<SignUp1> {
   Map<String, String> _userInfo = new Map<String, String>();
 
   @override
@@ -140,7 +139,6 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-
                       ),
                     ],
                   )),

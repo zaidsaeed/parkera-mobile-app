@@ -5,12 +5,15 @@ import "services/graphqlConf.dart";
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
-void main() => runApp(
-      GraphQLProvider(
-        client: graphQLConfiguration.client,
-        child: CacheProvider(child: MyApp()),
-      ),
-    );
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    GraphQLProvider(
+      client: graphQLConfiguration.client,
+      child: CacheProvider(child: MyApp()),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override

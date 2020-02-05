@@ -27,7 +27,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Add Parking Spot"),
+      title: Text("Add Car Information"),
       content: Container(
         child: SingleChildScrollView(
           child: ConstrainedBox(

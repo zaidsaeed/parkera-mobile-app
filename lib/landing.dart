@@ -7,34 +7,89 @@ class Landing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Parkera',
+      
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Dummy Landing page'),
+          backgroundColor: Colors.teal,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Image.asset(
+                  'assets/images/appBarLogo.png',
+                fit: BoxFit.cover,
+                height: 95.0,
+              ),
+            ],
+          )
         ),
         body: Center(
           child: Column(
               children: <Widget>[
-                FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
-                  child: Text(
-                    "to Log In",
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/landing.jpg'),
+                      fit: BoxFit.cover,
+                    )
                   ),
                 ),
-                FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUp()),
-                    );
-                  },
-                  child: Text(
-                    "Navigate To SignUp",
+                SizedBox(height: 300.0),
+                Container(
+                    width: 250,
+                    height: 50.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(40.0),
+                      shadowColor: Colors.teal,
+                      color: Colors.teal,
+                      elevation: 7.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()),
+                          );
+                        },
+                        child: Center(
+                          child: Text(
+                            'LOGIN',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: 'Lato'),
+                          ),
+                        ),
+                      ),
+                    )),
+                SizedBox(height: 20.0),
+                Container(
+                  width: 250,
+                  height: 50.0,
+                  color: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 2.0),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(40.0)),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUp()),
+                          );
+                        },
+                      child: Center(
+                        child: Text('Sign Up',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: 'Lato')),
+                      ),
+                    ),
                   ),
                 ),
             ],

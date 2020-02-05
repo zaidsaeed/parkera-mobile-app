@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import './addParkingSpotDialogWindow.dart';
+import './addCarInfoAlertDialogWindow.dart';
+
 
 class Home extends StatelessWidget {
   void _addParkingSpot(context) {
@@ -13,13 +15,30 @@ class Home extends StatelessWidget {
     );
   }
 
+  void _addCarInfo(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        carInfoAlertDialog carInalertDialogWindow = new carInfoAlertDialog();
+        return carInalertDialogWindow;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Floating Action Button'),
       ),
-      body: Center(child: const Text('Press the button below!')),
+      body: Center(child: Column( children: <Widget>[
+        const Text('Press the button below!'),
+        OutlineButton(
+            child: new Text("add a car"),
+            onPressed: ()=> _addCarInfo(context),
+            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
+        )
+      ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addParkingSpot(context),
         child: Icon(Icons.add),
@@ -28,3 +47,5 @@ class Home extends StatelessWidget {
     );
   }
 }
+
+

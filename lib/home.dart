@@ -29,12 +29,21 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Floating Action Button'),
+        title: const Text('Floating Action Button',
+        style: TextStyle(
+          fontFamily: 'Lato'
+        )),
       ),
       body: Center(child: Column( children: <Widget>[
-        const Text('Press the button below!'),
+        const Text('Press the button below!',
+          style: TextStyle(
+            fontFamily: 'Lato'
+          )),
         OutlineButton(
-            child: new Text("add a car"),
+            child: new Text("add a car",
+            style: TextStyle(
+              fontFamily: 'Lato'
+            ),),
             onPressed: ()=> _addCarInfo(context),
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))
         )

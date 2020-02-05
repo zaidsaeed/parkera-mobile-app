@@ -22,18 +22,19 @@ class Landing extends StatelessWidget {
             ],
           )
         ),
-        body: Center(
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/landing.jpg'),
+                fit: BoxFit.fill,
+              )
+          ),
           child: Column(
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/landing.jpg'),
-                      fit: BoxFit.cover,
-                    )
-                  ),
+
                 ),
-                SizedBox(height: 300.0),
+                SizedBox(height: 440.0),
                 Container(
                     width: 250,
                     height: 50.0,
@@ -69,7 +70,7 @@ class Landing extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.black,
+                            color: Colors.white,
                             style: BorderStyle.solid,
                             width: 2.0),
                         color: Colors.transparent,
@@ -84,7 +85,7 @@ class Landing extends StatelessWidget {
                       child: Center(
                         child: Text('Sign Up',
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w900,
                                 fontFamily: 'Lato')),

@@ -28,7 +28,8 @@ class _SignUpState extends State<SignUp> {
                       child: Text(
                         'Signup',
                         style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold),
+                            fontSize: 80.0, fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato'),
                       ),
                     ),
                     Container(
@@ -38,7 +39,7 @@ class _SignUpState extends State<SignUp> {
                         style: TextStyle(
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.green),
+                            color: Colors.teal),
                       ),
                     )
                   ],
@@ -58,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                         decoration: InputDecoration(
                             labelText: 'EMAIL',
                             labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Lato',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey),
                             // hintText: 'EMAIL',
@@ -77,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                         decoration: InputDecoration(
                             labelText: 'PASSWORD ',
                             labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Lato',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey),
                             focusedBorder: UnderlineInputBorder(
@@ -100,8 +101,8 @@ class _SignUpState extends State<SignUp> {
                           height: 40.0,
                           child: Material(
                             borderRadius: BorderRadius.circular(20.0),
-                            shadowColor: Colors.greenAccent,
-                            color: Colors.green,
+                            shadowColor: Colors.tealAccent,
+                            color: Colors.teal,
                             elevation: 7.0,
                             child: GestureDetector(
                               onTap: () {},
@@ -111,7 +112,7 @@ class _SignUpState extends State<SignUp> {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat'),
+                                      fontFamily: 'Lato'),
                                 ),
                               ),
                             ),
@@ -136,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                               child: Text('Go Back',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat')),
+                                      fontFamily: 'Lato')),
                             ),
                           ),
                         ),
@@ -152,8 +153,10 @@ class _SignUpState extends State<SignUp> {
                       MaterialPageRoute(builder: (context) => Home()),
                     );
                   },
-                  child: Text(
-                    "Navigate To Homepage",
+                  child: Text("Navigate To Homepage",
+                    style: TextStyle(
+                      fontFamily: 'Lato'
+                    ),
                   ),
                 ),
               )

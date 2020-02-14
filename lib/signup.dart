@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
+import './services/graphqlConf.dart';
+import './signup/signupMutQueries.dart';
+import "package:graphql_flutter/graphql_flutter.dart";
 
 class SignUp extends StatefulWidget {
   @override
@@ -11,6 +14,8 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   Map<String, String> _userInfo = new Map<String, String>();
+  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+  SignUpMutQueries addUserMutation = SignUpMutQueries();
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +154,23 @@ class _SignUpState extends State<SignUp> {
                             color: Colors.teal,
                             elevation: 7.0,
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () async {
+                                print('hello');
+                                GraphQLClient _client =
+                                    graphQLConfiguration.clientToQuery();
+                                var _userdata = _userInfo.values.toList();
+                                QueryResult result =
+                                    await _client.mutate(MutationOptions(
+                                  document: addUserMutation.addUser(
+                                    _userdata[0],
+                                    _userdata[1],
+                                    _userdata[2],
+                                    _userdata[3],
+                                    'user',
+                                  ),
+                                ));
+                                print(result);
+                              },
                               child: Center(
                                 child: Text(
                                   'SIGNUP',

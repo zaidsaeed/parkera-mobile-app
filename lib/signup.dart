@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
 
-
 class SignUp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -28,7 +27,8 @@ class _SignUpState extends State<SignUp> {
                       child: Text(
                         'Signup',
                         style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold,
+                            fontSize: 80.0,
+                            fontWeight: FontWeight.bold,
                             fontFamily: 'Lato'),
                       ),
                     ),
@@ -52,12 +52,12 @@ class _SignUpState extends State<SignUp> {
                       TextField(
                         onChanged: (text) {
                           setState(() {
-                            _userInfo["email"] = text;
+                            _userInfo["firstname"] = text;
                           });
                           print(_userInfo);
                         },
                         decoration: InputDecoration(
-                            labelText: 'EMAIL',
+                            labelText: 'First Name',
                             labelStyle: TextStyle(
                                 fontFamily: 'Lato',
                                 fontWeight: FontWeight.bold,
@@ -66,6 +66,61 @@ class _SignUpState extends State<SignUp> {
                             // hintStyle: ,
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
+                      ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _userInfo["lastname"] = text;
+                          });
+                          print(_userInfo);
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'LAST NAME',
+                            labelStyle: TextStyle(
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                            // hintText: 'EMAIL',
+                            // hintStyle: ,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green))),
+                      ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _userInfo["email"] = text;
+                          });
+                          print(_userInfo);
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'EMAIL ',
+                            labelStyle: TextStyle(
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green))),
+                        obscureText: true,
+                      ),
+                      SizedBox(height: 10.0),
+                      TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _userInfo["phone"] = text;
+                          });
+                          print(_userInfo);
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'PHONE ',
+                            labelStyle: TextStyle(
+                                fontFamily: 'Lato',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green))),
+                        obscureText: true,
                       ),
                       SizedBox(height: 10.0),
                       TextField(
@@ -86,17 +141,6 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                       ),
                       SizedBox(height: 10.0),
-                      // TextField(
-                      //   decoration: InputDecoration(
-                      //       labelText: 'NICK NAME ',
-                      //       labelStyle: TextStyle(
-                      //           fontFamily: 'Montserrat',
-                      //           fontWeight: FontWeight.bold,
-                      //           color: Colors.grey),
-                      //       focusedBorder: UnderlineInputBorder(
-                      //           borderSide: BorderSide(color: Colors.green))),
-                      // ),
-                      // SizedBox(height: 50.0),
                       Container(
                           height: 40.0,
                           child: Material(
@@ -141,7 +185,6 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-
                       ),
                     ],
                   )),
@@ -153,10 +196,9 @@ class _SignUpState extends State<SignUp> {
                       MaterialPageRoute(builder: (context) => Home()),
                     );
                   },
-                  child: Text("Navigate To Homepage",
-                    style: TextStyle(
-                      fontFamily: 'Lato'
-                    ),
+                  child: Text(
+                    "Navigate To Homepage",
+                    style: TextStyle(fontFamily: 'Lato'),
                   ),
                 ),
               )

@@ -146,42 +146,76 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                       ),
                       SizedBox(height: 10.0),
-                      Container(
-                          height: 40.0,
-                          child: Material(
-                            borderRadius: BorderRadius.circular(20.0),
-                            shadowColor: Colors.tealAccent,
-                            color: Colors.teal,
-                            elevation: 7.0,
-                            child: GestureDetector(
-                              onTap: () async {
-                                print('hello');
-                                GraphQLClient _client =
-                                    graphQLConfiguration.clientToQuery();
-                                var _userdata = _userInfo.values.toList();
-                                QueryResult result =
-                                    await _client.mutate(MutationOptions(
-                                  document: addUserMutation.addUser(
-                                    _userdata[0],
-                                    _userdata[1],
-                                    _userdata[2],
-                                    _userdata[3],
-                                    'user',
-                                  ),
-                                ));
-                                print(result);
-                              },
-                              child: Center(
-                                child: Text(
-                                  'SIGNUP',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Lato'),
-                                ),
-                              ),
-                            ),
-                          )),
+                      Mutation(
+                        options: MutationOptions(
+                          documentNode: gql(addUserMutation
+                              .addUser), // this is the mutation string you just created
+                          // you can update the cache based on results
+                          update: (Cache cache, QueryResult result) {
+                            print(result);
+                            return cache;
+                          },
+                          // or do something with the result.data on completion
+                          onCompleted: (dynamic resultData) {
+                            print(resultData);
+                          },
+                        ),
+                        builder: (
+                          RunMutation runMutation,
+                          QueryResult result,
+                        ) {
+                          return FloatingActionButton(
+                            onPressed: () {
+                              var _userdata = _userInfo.values.toList();
+                              runMutation({
+                                'firstname': _userdata[0],
+                                'lastname': _userdata[1],
+                                'email': _userdata[2],
+                                'phone': _userdata[3],
+                                'user_role': 'User'
+                              });
+                            },
+                            tooltip: 'Star',
+                            child: Icon(Icons.star),
+                          );
+                        },
+                      ),
+                      // Container(
+                      //     height: 40.0,
+                      //     child: Material(
+                      //       borderRadius: BorderRadius.circular(20.0),
+                      //       shadowColor: Colors.tealAccent,
+                      //       color: Colors.teal,
+                      //       elevation: 7.0,
+                      //       child: GestureDetector(
+                      //         onTap: () async {
+                      //           print('hello');
+                      //           GraphQLClient _client =
+                      //               graphQLConfiguration.clientToQuery();
+                      //           var _userdata = _userInfo.values.toList();
+                      //           QueryResult result =
+                      //               await _client.mutate(MutationOptions(
+                      //             documentNode: gql(addUserMutation.addUser(
+                      //               _userdata[0],
+                      //               _userdata[1],
+                      //               _userdata[2],
+                      //               _userdata[3],
+                      //               'user',
+                      //             )),
+                      //           ));
+                      //           print(result);
+                      //         },
+                      //         child: Center(
+                      //           child: Text(
+                      //             'SIGNUP',
+                      //             style: TextStyle(
+                      //                 color: Colors.white,
+                      //                 fontWeight: FontWeight.bold,
+                      //                 fontFamily: 'Lato'),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     )),
                       SizedBox(height: 20.0),
                       Container(
                         height: 40.0,

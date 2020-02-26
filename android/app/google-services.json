@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "466183044345",
+    "firebase_url": "https://parkera-16a31.firebaseio.com",
+    "project_id": "parkera-16a31",
+    "storage_bucket": "parkera-16a31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466183044345:android:7064e61c6a04c7eb1db628",
+        "android_client_info": {
+          "package_name": "com.example.parkera"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466183044345-59lf9qse04b4kr88a4tl9osf4kv4jjni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parkera",
+            "certificate_hash": "85560bea816370be00591fe8462b53849cdfafba"
+          }
+        },
+        {
+          "client_id": "466183044345-fb8u7552l8kjs4selmn0k3b3b9fg9cce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAST3TV_EiZ2IT8OOS3k3bf_JwiLBjBgYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466183044345-fb8u7552l8kjs4selmn0k3b3b9fg9cce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

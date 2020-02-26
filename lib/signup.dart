@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
-import 'package:parkera/landing.dart';
 import './services/graphqlConf.dart';
 import './signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
@@ -63,14 +62,18 @@ class _SignUpState extends State<SignUp> {
                           });
                           print(_userInfo);
                         },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                             labelText: 'First Name',
                             labelStyle: TextStyle(
                                 fontFamily: 'Lato',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey),
-                            // hintText: 'EMAIL',
-                            // hintStyle: ,
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
                       ),
@@ -101,6 +104,7 @@ class _SignUpState extends State<SignUp> {
                           });
                           print(_userInfo);
                         },
+                        errorText: "Not enough",
                         decoration: InputDecoration(
                             labelText: 'EMAIL ',
                             labelStyle: TextStyle(
@@ -202,23 +206,6 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 )),
                           );
-
-                          // return FloatingActionButton(
-                          //   onPressed: () {
-                          //     var _userdata = _userInfo.values.toList();
-                          //     runMutation({
-                          //       'firstname': _userdata[0],
-                          //       'lastname': _userdata[1],
-                          //       'email': _userdata[2],
-                          //       'phone': _userdata[3],
-                          //       'user_role': 'User',
-                          //       'password':
-                          //           Password.hash(_userdata[4], new PBKDF2())
-                          //     });
-                          //   },
-                          //   tooltip: 'Star',
-                          //   child: Icon(Icons.star),
-                          // );
                         },
                       ),
                       SizedBox(height: 20.0),
@@ -262,27 +249,6 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               )
-              // SizedBox(height: 15.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     Text(
-              //       'New to Spotify?',
-              //       style: TextStyle(
-              //         fontFamily: 'Montserrat',
-              //       ),
-              //     ),
-              //     SizedBox(width: 5.0),
-              //     InkWell(
-              //       child: Text('Register',
-              //           style: TextStyle(
-              //               color: Colors.green,
-              //               fontFamily: 'Montserrat',
-              //               fontWeight: FontWeight.bold,
-              //               decoration: TextDecoration.underline)),
-              //     )
-              //   ],
-              // )
             ]));
   }
 }

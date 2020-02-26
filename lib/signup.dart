@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
+import 'package:parkera/landing.dart';
 import './services/graphqlConf.dart';
 import './signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
@@ -108,10 +109,10 @@ class _SignUpState extends State<SignUp> {
                                 color: Colors.grey),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
-                        obscureText: true,
                       ),
                       SizedBox(height: 10.0),
                       TextField(
+                        keyboardType: TextInputType.number,
                         onChanged: (text) {
                           setState(() {
                             _userInfo["phone"] = text;
@@ -126,7 +127,6 @@ class _SignUpState extends State<SignUp> {
                                 color: Colors.grey),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
-                        obscureText: true,
                       ),
                       SizedBox(height: 10.0),
                       TextField(
@@ -165,60 +165,62 @@ class _SignUpState extends State<SignUp> {
                           RunMutation runMutation,
                           QueryResult result,
                         ) {
-                          return FloatingActionButton(
-                            onPressed: () {
-                              var _userdata = _userInfo.values.toList();
-                              runMutation({
-                                'firstname': _userdata[0],
-                                'lastname': _userdata[1],
-                                'email': _userdata[2],
-                                'phone': _userdata[3],
-                                'user_role': 'User',
-                                'password':
-                                    Password.hash(_userdata[4], new PBKDF2())
-                              });
-                            },
-                            tooltip: 'Star',
-                            child: Icon(Icons.star),
+                          return Container(
+                            height: 40.0,
+                            color: Colors.transparent,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black,
+                                        style: BorderStyle.solid,
+                                        width: 1.0),
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Center(
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      var _userdata = _userInfo.values.toList();
+                                      runMutation({
+                                        'firstname': _userdata[0],
+                                        'lastname': _userdata[1],
+                                        'email': _userdata[2],
+                                        'phone': _userdata[3],
+                                        'user_role': 'User',
+                                        'password': Password.hash(
+                                            _userdata[4], new PBKDF2())
+                                      });
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Home()),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Sign Up",
+                                      style: TextStyle(fontFamily: 'Lato'),
+                                    ),
+                                  ),
+                                )),
                           );
+
+                          // return FloatingActionButton(
+                          //   onPressed: () {
+                          //     var _userdata = _userInfo.values.toList();
+                          //     runMutation({
+                          //       'firstname': _userdata[0],
+                          //       'lastname': _userdata[1],
+                          //       'email': _userdata[2],
+                          //       'phone': _userdata[3],
+                          //       'user_role': 'User',
+                          //       'password':
+                          //           Password.hash(_userdata[4], new PBKDF2())
+                          //     });
+                          //   },
+                          //   tooltip: 'Star',
+                          //   child: Icon(Icons.star),
+                          // );
                         },
                       ),
-                      // Container(
-                      //     height: 40.0,
-                      //     child: Material(
-                      //       borderRadius: BorderRadius.circular(20.0),
-                      //       shadowColor: Colors.tealAccent,
-                      //       color: Colors.teal,
-                      //       elevation: 7.0,
-                      //       child: GestureDetector(
-                      //         onTap: () async {
-                      //           print('hello');
-                      //           GraphQLClient _client =
-                      //               graphQLConfiguration.clientToQuery();
-                      //           var _userdata = _userInfo.values.toList();
-                      //           QueryResult result =
-                      //               await _client.mutate(MutationOptions(
-                      //             documentNode: gql(addUserMutation.addUser(
-                      //               _userdata[0],
-                      //               _userdata[1],
-                      //               _userdata[2],
-                      //               _userdata[3],
-                      //               'user',
-                      //             )),
-                      //           ));
-                      //           print(result);
-                      //         },
-                      //         child: Center(
-                      //           child: Text(
-                      //             'SIGNUP',
-                      //             style: TextStyle(
-                      //                 color: Colors.white,
-                      //                 fontWeight: FontWeight.bold,
-                      //                 fontFamily: 'Lato'),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     )),
                       SizedBox(height: 20.0),
                       Container(
                         height: 40.0,

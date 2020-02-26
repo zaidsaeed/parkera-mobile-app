@@ -3,7 +3,7 @@ class SignUpMutQueries {
   //     String userRole) {
   //   return """
   //     mutation{
-  //         addUser(firstname: "$firstname", lastname: "$lastname", email: "$email", phone: "$phone", user_role: "$userRole"){
+  //         addUser(firstname: "$firstname", lastname: "$lastname", email: "$email", phone: "$phone", user_role: "$userRole", password: "$password"){
   //           name
   //           lastName
   //         }
@@ -12,8 +12,8 @@ class SignUpMutQueries {
   // }
 
   String addUser = """
-  mutation AddUser(\$firstname: String!, \$lastname: String!, \$email: String!, \$phone: String!, \$user_role: String!) {
-    addUser(firstname: \$firstname, lastname: \$lastname, email: \$email, phone: \$phone, user_role: \$user_role) {
+  mutation AddUser(\$firstname: String!, \$lastname: String!, \$email: String!, \$phone: String!, \$user_role: String!, \$password: String!) {
+    addUser(firstname: \$firstname, lastname: \$lastname, email: \$email, phone: \$phone, user_role: \$user_role, password: \$password) {
       firstname
     }
   }

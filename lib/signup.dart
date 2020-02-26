@@ -4,6 +4,7 @@ import 'package:parkera/home.dart';
 import './services/graphqlConf.dart';
 import './signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
+import 'package:password/password.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -172,7 +173,9 @@ class _SignUpState extends State<SignUp> {
                                 'lastname': _userdata[1],
                                 'email': _userdata[2],
                                 'phone': _userdata[3],
-                                'user_role': 'User'
+                                'user_role': 'User',
+                                'password':
+                                    Password.hash(_userdata[4], new PBKDF2())
                               });
                             },
                             tooltip: 'Star',

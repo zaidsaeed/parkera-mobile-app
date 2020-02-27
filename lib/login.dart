@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import './services/graphqlConf.dart';
 import './login/loginSupport.dart';
-
+// import './services/graphqlConf.dart';
+import 'package:graphql/client.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,7 +16,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   Map<String, String> _AccountInfo = new Map<String, String>();
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
-
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,8 @@ class _LoginState extends State<Login> {
                       child: Text(
                         'Log In',
                         style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold,
+                            fontSize: 80.0,
+                            fontWeight: FontWeight.bold,
                             fontFamily: 'Lato'),
                       ),
                     )
@@ -99,29 +100,44 @@ class _LoginState extends State<Login> {
                             shadowColor: Colors.tealAccent,
                             color: Colors.teal,
                             elevation: 7.0,
-                            child: GestureDetector(
-                              onTap: () {
-
+                            child: FlatButton(
+                              onPressed: () async {
+                                final GraphQLClient _client =
+                                    graphQLConfiguration.clientToQuery();
                                 var _userdata = _AccountInfo.values.toList();
-                                print(_userdata[0]);
-                                Query(options: QueryOptions(
-                                    documentNode: gql(loginSupport.readRepositories),
-                                     variables: {
+                                final QueryResult result =
+                                    await _client.query(QueryOptions(
+                                  documentNode:
+                                      gql(loginSupport.readRepositories),
+                                  variables: <String, dynamic>{
                                     'nEmail': _userdata[0],
-                                  }
+                                  },
+                                ));
 
-                                ),
-                                    builder: (QueryResult result,{ VoidCallback refetch, FetchMore fetchMore }) {
-                                      if (result.hasException) {
+                                if (result.hasException) {
+                                  print(result.exception.toString());
+                                }
 
-                                        return Text(result.exception.toString());
-                                      }
-                                      if (result==null) {
-                                        return Text("NO data found");
-                                      }
-                                  print("adasd"+result.data);
-                                  return Text("yes we have");
-                                });
+                                // var _userdata = _AccountInfo.values.toList();
+                                // print(_userdata[0]);
+                                // Query(options: QueryOptions(
+                                //     documentNode: gql(loginSupport.readRepositories),
+                                //      variables: {
+                                //     'nEmail': _userdata[0],
+                                //   }
+
+                                // ),
+                                //     builder: (QueryResult result,{ VoidCallback refetch, FetchMore fetchMore }) {
+                                //       if (result.hasException) {
+
+                                //         return Text(result.exception.toString());
+                                //       }
+                                //       if (result==null) {
+                                //         return Text("NO data found");
+                                //       }
+                                //   print("adasd"+result.data);
+                                //   return Text("yes we have");
+                                // });
                               },
                               child: Center(
                                 child: Text(
@@ -159,7 +175,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-
                     ],
                   )),
               // GqlCaller()

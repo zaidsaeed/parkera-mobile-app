@@ -199,6 +199,13 @@ class _SignUpState extends State<SignUp> {
                           // or do something with the result.data on completion
                           onCompleted: (dynamic resultData) {
                             print(resultData);
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text('Your Account was Created.'),
+                            ));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Home()),
+                            );
                           },
                         ),
                         builder: (
@@ -240,12 +247,6 @@ class _SignUpState extends State<SignUp> {
                                               'Please refer to the errors included in the form.'),
                                         ));
                                       }
-
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) => Home()),
-                                      // );
                                     },
                                     child: Text(
                                       "Sign Up",

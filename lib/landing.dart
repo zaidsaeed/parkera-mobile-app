@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import './signup.dart';
+import './signup/signup.dart';
 import './login.dart';
 
 class Landing extends StatelessWidget {

@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
-import './services/graphqlConf.dart';
-import './signup/signupMutQueries.dart';
+import '../services/graphqlConf.dart';
+import '../signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
 import 'package:password/password.dart';
+import './signupHeader.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class _SignUpState extends State<SignUp> {
   Map<String, String> _userInfo = new Map<String, String>();
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   SignUpMutQueries addUserMutation = SignUpMutQueries();
+  final _text = TextEditingController();
+  bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,32 +28,7 @@ class _SignUpState extends State<SignUp> {
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                child: Stack(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                      child: Text(
-                        'Signup',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Lato'),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(260.0, 125.0, 0.0, 0.0),
-                      child: Text(
-                        '.',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              SignUpHeader(),
               Container(
                   padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
                   child: Column(
@@ -92,6 +70,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       SizedBox(height: 10.0),
                       TextField(
+                        controller: _text,
                         onChanged: (text) {
                           setState(() {
                             _userInfo["email"] = text;
@@ -104,6 +83,8 @@ class _SignUpState extends State<SignUp> {
                                 fontFamily: 'Lato',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey),
+                            errorText:
+                                _validate ? 'Email cannot be empty' : null,
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green))),
                       ),
@@ -176,6 +157,11 @@ class _SignUpState extends State<SignUp> {
                                 child: Center(
                                   child: FlatButton(
                                     onPressed: () {
+                                      setState(() {
+                                        _text.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
+                                      });
                                       var _userdata = _userInfo.values.toList();
                                       runMutation({
                                         'firstname': _userdata[0],

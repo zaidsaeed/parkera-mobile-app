@@ -17,9 +17,16 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   Map<String, String> _userInfo = new Map<String, String>();
   SignUpMutQueries addUserMutation = SignUpMutQueries();
-  final _text = TextEditingController();
-  bool _validate = false;
-  final firstNameTextFieldController = TextEditingController();
+  final TextEditingController firstNameTextFieldController =
+      TextEditingController();
+  final TextEditingController lastNameTextFieldController =
+      TextEditingController();
+  final TextEditingController emailTextFieldController =
+      TextEditingController();
+  final TextEditingController phoneTextFieldController =
+      TextEditingController();
+  final TextEditingController passwordTextFieldController =
+      TextEditingController();
   Map<String, bool> isEmptyMap = {
     'isFirstNameEmpty': false,
     'isLastNameEmpty': false,
@@ -27,9 +34,84 @@ class _SignUpState extends State<SignUp> {
     'isPhoneEmpty': false,
     'isPasswordEmpty': false
   };
+  bool isEmailValid = true;
 
   @override
   Widget build(BuildContext context) {
+    bool validateSignUp() {
+      //Validate First Name
+      bool valid = true;
+      if (!_userInfo.keys.contains('firstname')) {
+        setState(() {
+          isEmptyMap['isFirstNameEmpty'] = true;
+        });
+        valid = false;
+      } else {
+        setState(() {
+          isEmptyMap['isFirstNameEmpty'] = false;
+        });
+      }
+
+      //Validate Last Name
+      if (!_userInfo.keys.contains('lastname')) {
+        setState(() {
+          isEmptyMap['isLastNameEmpty'] = true;
+        });
+        valid = false;
+      } else {
+        setState(() {
+          isEmptyMap['isLastNameEmpty'] = false;
+        });
+      }
+
+      //Validate email
+      if (!_userInfo.keys.contains('email')) {
+        setState(() {
+          isEmptyMap['isEmailEmpty'] = true;
+        });
+        valid = false;
+      } else {
+        RegExp exp = new RegExp(r"[^@]+@[^\.]+\..+");
+        if (!exp.hasMatch(_userInfo['email'])) {
+          setState(() {
+            isEmailValid = false;
+            isEmptyMap['isEmailEmpty'] = false;
+          });
+          valid = false;
+        } else {
+          setState(() {
+            isEmptyMap['isEmailEmpty'] = false;
+            isEmailValid = true;
+          });
+        }
+      }
+
+      //Validate Phone
+      if (!_userInfo.keys.contains('phone')) {
+        setState(() {
+          isEmptyMap['isPhoneEmpty'] = true;
+        });
+        valid = false;
+      } else {
+        setState(() {
+          isEmptyMap['isPhoneEmpty'] = false;
+        });
+      }
+
+      //Validate Password
+      if (!_userInfo.keys.contains('password')) {
+        setState(() {
+          isEmptyMap['isPasswordEmpty'] = true;
+        });
+        valid = false;
+      } else {
+        setState(() {
+          isEmptyMap['isPasswordEmpty'] = false;
+        });
+      }
+      return valid;
+    }
+
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Column(
@@ -53,79 +135,56 @@ class _SignUpState extends State<SignUp> {
                         isEmpty: isEmptyMap['isFirstNameEmpty'],
                       ),
                       SizedBox(height: 10.0),
-                      TextField(
-                        onChanged: (text) {
+                      SignUpTextField(
+                        labelText: 'Last Name',
+                        onTextChange: (text) {
                           setState(() {
                             _userInfo["lastname"] = text;
                           });
-                          print(_userInfo);
                         },
-                        decoration: InputDecoration(
-                            labelText: 'LAST NAME',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            // hintText: 'EMAIL',
-                            // hintStyle: ,
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
+                        emptyErrorText: 'Last Name Cannot Be Empty',
+                        textEditingController: lastNameTextFieldController,
+                        isValid: true,
+                        isEmpty: isEmptyMap['isLastNameEmpty'],
                       ),
                       SizedBox(height: 10.0),
-                      TextField(
-                        controller: _text,
-                        onChanged: (text) {
+                      SignUpTextField(
+                        labelText: 'Email',
+                        onTextChange: (text) {
                           setState(() {
                             _userInfo["email"] = text;
                           });
-                          print(_userInfo);
                         },
-                        decoration: InputDecoration(
-                            labelText: 'EMAIL ',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            errorText:
-                                _validate ? 'Email cannot be empty' : null,
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
+                        emptyErrorText: 'Email Cannot Be Empty',
+                        invalidErrorText: 'Email is invalid',
+                        textEditingController: emailTextFieldController,
+                        isValid: isEmailValid,
+                        isEmpty: isEmptyMap['isEmailEmpty'],
                       ),
                       SizedBox(height: 10.0),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        onChanged: (text) {
-                          setState(() {
-                            _userInfo["phone"] = text;
-                          });
-                          print(_userInfo);
-                        },
-                        decoration: InputDecoration(
-                            labelText: 'PHONE ',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                      ),
+                      SignUpTextField(
+                          labelText: 'Phone',
+                          onTextChange: (text) {
+                            setState(() {
+                              _userInfo["phone"] = text;
+                            });
+                          },
+                          emptyErrorText: 'Phone Cannot Be Empty',
+                          textEditingController: phoneTextFieldController,
+                          isEmpty: isEmptyMap['isPhoneEmpty'],
+                          isValid: true),
                       SizedBox(height: 10.0),
-                      TextField(
-                        onChanged: (text) {
+                      SignUpTextField(
+                        labelText: 'Password',
+                        onTextChange: (text) {
                           setState(() {
                             _userInfo["password"] = text;
                           });
-                          print(_userInfo);
                         },
-                        decoration: InputDecoration(
-                            labelText: 'PASSWORD ',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                        obscureText: true,
+                        emptyErrorText: 'Password Cannot Be Empty',
+                        textEditingController: passwordTextFieldController,
+                        isEmpty: isEmptyMap['isPasswordEmpty'],
+                        isValid: true,
                       ),
                       SizedBox(height: 10.0),
                       Mutation(
@@ -161,27 +220,32 @@ class _SignUpState extends State<SignUp> {
                                   child: FlatButton(
                                     onPressed: () {
                                       print(_userInfo);
-                                      if (!_userInfo.keys
-                                          .contains('firstname')) {
-                                        setState(() {
-                                          isEmptyMap['isFirstNameEmpty'] = true;
+                                      bool isValid = validateSignUp();
+                                      if (isValid) {
+                                        var _userdata =
+                                            _userInfo.values.toList();
+                                        runMutation({
+                                          'firstname': _userdata[0],
+                                          'lastname': _userdata[1],
+                                          'email': _userdata[2],
+                                          'phone': _userdata[3],
+                                          'user_role': 'User',
+                                          'password': Password.hash(
+                                              _userdata[4], new PBKDF2())
                                         });
+                                      } else {
+                                        Scaffold.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              'Please refer to the errors included in the form.'),
+                                        ));
                                       }
-                                      var _userdata = _userInfo.values.toList();
-                                      runMutation({
-                                        'firstname': _userdata[0],
-                                        'lastname': _userdata[1],
-                                        'email': _userdata[2],
-                                        'phone': _userdata[3],
-                                        'user_role': 'User',
-                                        'password': Password.hash(
-                                            _userdata[4], new PBKDF2())
-                                      });
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Home()),
-                                      );
+
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) => Home()),
+                                      // );
                                     },
                                     child: Text(
                                       "Sign Up",

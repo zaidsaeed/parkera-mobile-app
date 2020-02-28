@@ -62,12 +62,6 @@ class _SignUpState extends State<SignUp> {
                           });
                           print(_userInfo);
                         },
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
                         decoration: InputDecoration(
                             labelText: 'First Name',
                             labelStyle: TextStyle(
@@ -104,7 +98,6 @@ class _SignUpState extends State<SignUp> {
                           });
                           print(_userInfo);
                         },
-                        errorText: "Not enough",
                         decoration: InputDecoration(
                             labelText: 'EMAIL ',
                             labelStyle: TextStyle(

@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:parkera/utils/firebase_auth.dart';
+import 'package:parkera/home.dart';
 
 import './gqlcaller.dart';
 
@@ -107,6 +109,42 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           )),
+                      SizedBox(height: 20.0),
+                      Container(
+                        height: 40.0,
+                        width: 150.0,
+                        color: Colors.transparent,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.black,
+                                  style: BorderStyle.solid,
+                                  width: 1.0),
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: InkWell(
+                            onTap: () async{
+                              bool res = await AuthProvider().loginWithGoogle();
+                              if (res)
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Home()),
+                                );
+                              else
+                                print("Error logging in with google");
+                            },
+                            child: Center(
+
+                              child: FlatButton.icon( icon: Icon(Icons.mail), label: Text('Google',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Lato')),)
+
+                            ),
+                          ),
+                        ),
+                      ),
+
                       SizedBox(height: 20.0),
                       Container(
                         height: 40.0,

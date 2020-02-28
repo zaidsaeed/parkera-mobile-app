@@ -21,6 +21,8 @@ class _SignUpState extends State<SignUp> {
   SignUpMutQueries addUserMutation = SignUpMutQueries();
   final _text = TextEditingController();
   bool _validate = false;
+  final firstNameTextFieldController = TextEditingController();
+  bool isFirstNameEmpty = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,29 +36,19 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
                   child: Column(
                     children: <Widget>[
-                      SignUpTextField('First Name', (text) {
-                        setState(() {
-                          _userInfo["firstname"] = text;
-                        });
-                      }),
+                      SignUpTextField(
+                        labelText: 'First Name',
+                        onTextChange: (text) {
+                          setState(() {
+                            _userInfo["firstname"] = text;
+                          });
+                        },
+                        emptyErrorText: 'First Name Cannot Be Empty',
+                        textEditingController: firstNameTextFieldController,
+                        isValid: true,
+                        isEmpty: isFirstNameEmpty,
+                      ),
                       SizedBox(height: 10.0),
-                      // TextField(
-                      //   onChanged: (text) {
-                      //     setState(() {
-                      //       _userInfo["firstname"] = text;
-                      //     });
-                      //     print(_userInfo);
-                      //   },
-                      //   decoration: InputDecoration(
-                      //       labelText: 'First Name',
-                      //       labelStyle: TextStyle(
-                      //           fontFamily: 'Lato',
-                      //           fontWeight: FontWeight.bold,
-                      //           color: Colors.grey),
-                      //       focusedBorder: UnderlineInputBorder(
-                      //           borderSide: BorderSide(color: Colors.green))),
-                      // ),
-                      // SizedBox(height: 10.0),
                       TextField(
                         onChanged: (text) {
                           setState(() {
@@ -165,6 +157,12 @@ class _SignUpState extends State<SignUp> {
                                   child: FlatButton(
                                     onPressed: () {
                                       print(_userInfo);
+                                      if (!_userInfo.keys
+                                          .contains('firstname')) {
+                                        setState(() {
+                                          isFirstNameEmpty = true;
+                                        });
+                                      }
                                       var _userdata = _userInfo.values.toList();
                                       runMutation({
                                         'firstname': _userdata[0],

@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/home.dart';
-import '../services/graphqlConf.dart';
 import '../signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
 import 'package:password/password.dart';
@@ -17,12 +16,17 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   Map<String, String> _userInfo = new Map<String, String>();
-  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   SignUpMutQueries addUserMutation = SignUpMutQueries();
   final _text = TextEditingController();
   bool _validate = false;
   final firstNameTextFieldController = TextEditingController();
-  bool isFirstNameEmpty = false;
+  Map<String, bool> isEmptyMap = {
+    'isFirstNameEmpty': false,
+    'isLastNameEmpty': false,
+    'isEmailEmpty': false,
+    'isPhoneEmpty': false,
+    'isPasswordEmpty': false
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class _SignUpState extends State<SignUp> {
                         emptyErrorText: 'First Name Cannot Be Empty',
                         textEditingController: firstNameTextFieldController,
                         isValid: true,
-                        isEmpty: isFirstNameEmpty,
+                        isEmpty: isEmptyMap['isFirstNameEmpty'],
                       ),
                       SizedBox(height: 10.0),
                       TextField(
@@ -160,7 +164,7 @@ class _SignUpState extends State<SignUp> {
                                       if (!_userInfo.keys
                                           .contains('firstname')) {
                                         setState(() {
-                                          isFirstNameEmpty = true;
+                                          isEmptyMap['isFirstNameEmpty'] = true;
                                         });
                                       }
                                       var _userdata = _userInfo.values.toList();

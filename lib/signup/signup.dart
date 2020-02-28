@@ -6,6 +6,7 @@ import '../signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
 import 'package:password/password.dart';
 import './signupHeader.dart';
+import './signupTextField.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -33,23 +34,29 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
                   child: Column(
                     children: <Widget>[
-                      TextField(
-                        onChanged: (text) {
-                          setState(() {
-                            _userInfo["firstname"] = text;
-                          });
-                          print(_userInfo);
-                        },
-                        decoration: InputDecoration(
-                            labelText: 'First Name',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                      ),
+                      SignUpTextField('First Name', (text) {
+                        setState(() {
+                          _userInfo["firstname"] = text;
+                        });
+                      }),
                       SizedBox(height: 10.0),
+                      // TextField(
+                      //   onChanged: (text) {
+                      //     setState(() {
+                      //       _userInfo["firstname"] = text;
+                      //     });
+                      //     print(_userInfo);
+                      //   },
+                      //   decoration: InputDecoration(
+                      //       labelText: 'First Name',
+                      //       labelStyle: TextStyle(
+                      //           fontFamily: 'Lato',
+                      //           fontWeight: FontWeight.bold,
+                      //           color: Colors.grey),
+                      //       focusedBorder: UnderlineInputBorder(
+                      //           borderSide: BorderSide(color: Colors.green))),
+                      // ),
+                      // SizedBox(height: 10.0),
                       TextField(
                         onChanged: (text) {
                           setState(() {
@@ -157,11 +164,7 @@ class _SignUpState extends State<SignUp> {
                                 child: Center(
                                   child: FlatButton(
                                     onPressed: () {
-                                      setState(() {
-                                        _text.text.isEmpty
-                                            ? _validate = true
-                                            : _validate = false;
-                                      });
+                                      print(_userInfo);
                                       var _userdata = _userInfo.values.toList();
                                       runMutation({
                                         'firstname': _userdata[0],

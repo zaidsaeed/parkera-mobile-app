@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import './addParkingSpotDialogWindow.dart';
-import './addCarInfoAlertDialogWindow.dart';
+import 'addParkingSpot/addParkingSpotDialogWindow.dart';
+import 'addCar/addCarInfoAlertDialogWindow.dart';
 
 
 class Home extends StatelessWidget {

@@ -72,8 +72,6 @@ class _LoginState extends State<Login> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: Colors.green))),
                             ),
-                        height: 40.0,
-                                  style: BorderStyle.solid,
                             SizedBox(height: 10.0),
                             TextField(
                               onChanged: (text) {

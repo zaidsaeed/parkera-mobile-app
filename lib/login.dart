@@ -5,6 +5,9 @@ import './services/graphqlConf.dart';
 import './login/loginSupport.dart';
 // import './services/graphqlConf.dart';
 import 'package:graphql/client.dart';
+import 'package:password/password.dart';
+import 'package:parkera/home.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -117,6 +120,18 @@ class _LoginState extends State<Login> {
                                 if (result.hasException) {
                                   print(result.exception.toString());
                                 }
+                                String reL = result.data['getAuthenticationbyEmail'][0]['password'];
+
+                               if(Password.verify(_userdata[1], reL)){
+                                 int uid = result.data['getAuthenticationbyEmail'][0]['userAccountId'];
+                                 Navigator.push(
+                                   context,
+                                   MaterialPageRoute(
+                                       builder: (context) => Home()),
+                                 );
+                               }
+
+
 
                                 // var _userdata = _AccountInfo.values.toList();
                                 // print(_userdata[0]);

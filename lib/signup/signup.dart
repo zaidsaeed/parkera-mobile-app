@@ -193,6 +193,9 @@ class _SignUpState extends State<SignUp> {
                               .addUser), // this is the mutation string you just created
                           // you can update the cache based on results
                           update: (Cache cache, QueryResult result) {
+                            if (result.hasException) {
+                              print('here');
+                            }
                             print(result);
                             return cache;
                           },

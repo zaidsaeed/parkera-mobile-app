@@ -38,7 +38,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
               children: <Widget>[
                 Container(
                   child: TextField(
-                    maxLength: 5,
+                    maxLength: 7,
                     controller: txLicense,
                     // enabled: this.isAdd,
                     decoration: InputDecoration(

@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:parkera/utils/firebase_auth.dart';
-import 'package:parkera/home.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import './services/graphqlConf.dart';
 import './login/loginSupport.dart';
@@ -11,6 +9,8 @@ import 'package:password/password.dart';
 import 'package:parkera/home.dart';
 import 'package:provider/provider.dart';
 import './state/AppState.dart';
+import 'package:parkera/utils/firebase_auth.dart';
+import 'package:parkera/home.dart';
 
 
 class Login extends StatefulWidget {
@@ -72,62 +72,20 @@ class _LoginState extends State<Login> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: Colors.green))),
                             ),
-                          )),
-                      SizedBox(height: 20.0),
-                      Container(
                         height: 40.0,
-                        width: 150.0,
-                        color: Colors.transparent,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
                                   style: BorderStyle.solid,
-                                  width: 1.0),
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: InkWell(
-                            onTap: () async{
-                              bool res = await AuthProvider().loginWithGoogle();
-                              if (res)
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Home()),
-                                );
-                              else
-                                print("Error logging in with google");
-                            },
-                            child: Center(
-
-                              child: FlatButton.icon( icon: Icon(Icons.mail), label: Text('Google',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Lato')),)
-
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 20.0),
-                      Container(
-                        height: 40.0,
-                        color: Colors.transparent,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  style: BorderStyle.solid,
-                                  width: 1.0),
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Center(
-                              child: Text('Go Back',
-                                  style: TextStyle(
+                            SizedBox(height: 10.0),
+                            TextField(
+                              onChanged: (text) {
+                                setState(() {
+                                  _AccountInfo["password"] = text;
+                                });
+                                print(_AccountInfo);
+                              },
+                              decoration: InputDecoration(
+                                  labelText: 'PASSWORD ',
+                                  labelStyle: TextStyle(
+                                      fontFamily: 'Lato',
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
                                   focusedBorder: UnderlineInputBorder(
@@ -135,6 +93,41 @@ class _LoginState extends State<Login> {
                               obscureText: true,
                             ),
                             SizedBox(height: 10.0),
+                            Container(
+                              height: 40.0,
+                              width: 150.0,
+                              color: Colors.transparent,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black,
+                                        style: BorderStyle.solid,
+                                        width: 1.0),
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: InkWell(
+                                  onTap: () async{
+                                    bool res = await AuthProvider().loginWithGoogle();
+                                    if (res)
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Home()),
+                                      );
+                                    else
+                                      print("Error logging in with google");
+                                  },
+                                  child: Center(
+
+                                      child: FlatButton.icon( icon: Icon(Icons.mail), label: Text('Google',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Lato')),)
+
+                                  ),
+                                ),
+                              ),
+                            ),
+
 
                             // TextField(
                             //   decoration: InputDecoration(

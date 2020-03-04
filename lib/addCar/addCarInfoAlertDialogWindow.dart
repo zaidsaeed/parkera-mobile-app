@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
 // import "package:example/components/person.dart";
 import "./addCarMut.dart";
-import "../state/AppState.dart";
 import "package:provider/provider.dart";
 import '../globals.dart' as globals;
 

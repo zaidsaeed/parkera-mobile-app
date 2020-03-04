@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
 // import "package:example/components/person.dart";
 import "./addParkingSpotMut.dart";
+import '../globals.dart' as globals;
 
 class AlertDialogWindow extends StatefulWidget {
   // final Person person;
@@ -74,7 +75,8 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
             return  FlatButton(
               child: Text("Add Parking Spot"),
               onPressed: () {runMutation({
-                'address': _parkingSpotInfo['address']
+                'address': _parkingSpotInfo['address'],
+                'userAccountId': globals.userid
               });
               Navigator.of(context).pop();
               },

@@ -6,6 +6,7 @@ import "package:graphql_flutter/graphql_flutter.dart";
 import "./addCarMut.dart";
 import "../state/AppState.dart";
 import "package:provider/provider.dart";
+import '../globals.dart' as globals;
 
 class carInfoAlertDialog extends StatefulWidget {
   // final Person person;
@@ -30,9 +31,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<AppState>(
-      create: (context) => AppState(),
-      child: AlertDialog(
+    return AlertDialog(
         title: Text("Add Car Information"),
         content: Container(
           child: SingleChildScrollView(
@@ -96,9 +95,6 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
           ),
         ),
         actions: <Widget>[
-          Consumer<AppState>(
-              builder: (context, appState, child) {
-                return
                   Mutation(
                     options: MutationOptions(
                       documentNode: gql(addCarMutation), // this is the mutation string you just created
@@ -122,7 +118,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
                           'license': _carInfo['license'],
                           'model': _carInfo['model'],
                           'color': _carInfo['color'],
-                          'userAccountId': appState.userid
+                          'userAccountId': globals.userid
                         });
                         Navigator.of(context).pop();
                         },
@@ -130,8 +126,8 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
 
 
                     },
-                  );
-              }),
+                  ),
+
 
 
 
@@ -142,8 +138,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
               })
 
         ],
-      )
-    );
+      );
 
   }
 }

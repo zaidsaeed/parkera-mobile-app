@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import './state/AppState.dart';
 import 'package:parkera/utils/firebase_auth.dart';
 import 'package:parkera/home.dart';
+import 'globals.dart' as globals;
 
 
 class Login extends StatefulWidget {
@@ -26,9 +27,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<AppState>(
-        create:(context)=> AppState(),
-        child: MaterialApp(
+    return MaterialApp(
           home: new Scaffold(
               resizeToAvoidBottomPadding: false,
               body: Column(
@@ -145,9 +144,7 @@ class _LoginState extends State<Login> {
                                   shadowColor: Colors.tealAccent,
                                   color: Colors.teal,
                                   elevation: 7.0,
-                                  child: Consumer<AppState>(
-                                    builder: (context,appstate,child){
-                                      return FlatButton(
+                                  child: FlatButton(
                                         onPressed: () async {
                                           final GraphQLClient _client =
                                           graphQLConfiguration.clientToQuery();
@@ -168,7 +165,7 @@ class _LoginState extends State<Login> {
 
                                           if(Password.verify(_userdata[1], reL)){
 
-                                            appstate.setuserid(result.data['getAuthenticationbyEmail'][0]['userAccountId']);
+                                            globals.userid=result.data['getAuthenticationbyEmail'][0]['userAccountId'];
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -208,9 +205,7 @@ class _LoginState extends State<Login> {
                                                 fontFamily: 'Lato'),
                                           ),
                                         ),
-                                      );
-                                    }
-                                  )
+                                      )
                                 )
                             ),
                             SizedBox(height: 20.0),
@@ -242,7 +237,6 @@ class _LoginState extends State<Login> {
                         )),
                     // GqlCaller()
                   ]))
-        )
-    );
+        );
   }
 }

@@ -7,7 +7,6 @@ import './login/loginSupport.dart';
 import 'package:graphql/client.dart';
 import 'package:password/password.dart';
 import 'package:parkera/home.dart';
-import 'package:provider/provider.dart';
 import 'package:parkera/utils/firebase_auth.dart';
 import 'package:parkera/home.dart';
 import 'globals.dart' as globals;

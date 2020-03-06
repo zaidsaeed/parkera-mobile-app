@@ -191,25 +191,6 @@ class _SignUpState extends State<SignUp> {
                         options: MutationOptions(
                           documentNode: gql(addUserMutation
                               .addUser), // this is the mutation string you just created
-                          // you can update the cache based on results
-                          update: (Cache cache, QueryResult result) {
-                            if (result.hasException) {
-                              print('here');
-                            }
-                            print(result);
-                            return cache;
-                          },
-                          // or do something with the result.data on completion
-                          onCompleted: (dynamic resultData) {
-                            print(resultData);
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('Your Account was Created.'),
-                            ));
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Home()),
-                            );
-                          },
                         ),
                         builder: (
                           RunMutation runMutation,
@@ -243,6 +224,19 @@ class _SignUpState extends State<SignUp> {
                                           'password': Password.hash(
                                               _userdata[4], new PBKDF2())
                                         });
+                                        if (result.hasException) {
+                                          Scaffold.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                                'Something went wrong. This email might already be associated to an account'),
+                                          ));
+                                        } else {
+                                          Scaffold.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                                'Please refer to the errors included in the form.'),
+                                          ));
+                                        }
                                       } else {
                                         Scaffold.of(context)
                                             .showSnackBar(SnackBar(

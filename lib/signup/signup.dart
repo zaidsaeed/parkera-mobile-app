@@ -227,10 +227,13 @@ class _SignUpState extends State<SignUp> {
                                                 new PBKDF2())
                                           });
                                           if (result.hasException) {
+                                            var errorMssg = result.exception
+                                                .graphqlErrors[0].message;
+
                                             Scaffold.of(context)
                                                 .showSnackBar(SnackBar(
-                                              content: Text(result.exception
-                                                  .graphqlErrors[0].message),
+                                              content: Text(
+                                                  '${errorMssg[0].toUpperCase()}${errorMssg.substring(1)}'),
                                             ));
                                           } else {
                                             Scaffold.of(context)

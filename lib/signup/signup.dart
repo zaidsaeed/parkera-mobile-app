@@ -6,6 +6,7 @@ import "package:graphql_flutter/graphql_flutter.dart";
 import 'package:password/password.dart';
 import './signupHeader.dart';
 import './signupTextField.dart';
+import '../globals.dart' as globals;
 
 import 'package:toast/toast.dart';
 
@@ -238,6 +239,9 @@ class _SignUpState extends State<SignUp> {
                                               duration: Toast.LENGTH_SHORT,
                                             );
                                           } else {
+                                            var userId = result
+                                                .data.data['addUser']['id'];
+                                            globals.userid = userId;
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(

@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     if (this.snackbarText != null) {
       Toast.show(this.snackbarText, context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          duration: 5, gravity: Toast.BOTTOM);
     }
     return Scaffold(
       appBar: AppBar(

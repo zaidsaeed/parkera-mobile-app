@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (this.snackbarText != null) {
-      Toast.show("Toast plugin app", context,
+      Toast.show(this.snackbarText, context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     }
     return Scaffold(

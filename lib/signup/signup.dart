@@ -7,6 +7,8 @@ import 'package:password/password.dart';
 import './signupHeader.dart';
 import './signupTextField.dart';
 
+import 'package:toast/toast.dart';
+
 class SignUp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -174,6 +176,7 @@ class _SignUpState extends State<SignUp> {
                             emptyErrorText: 'Phone Cannot Be Empty',
                             textEditingController: phoneTextFieldController,
                             isEmpty: isEmptyMap['isPhoneEmpty'],
+                            textFieldType: TextInputType.number,
                             isValid: true),
                         SizedBox(height: 10.0),
                         SignUpTextField(
@@ -229,31 +232,26 @@ class _SignUpState extends State<SignUp> {
                                           if (result.hasException) {
                                             var errorMssg = result.exception
                                                 .graphqlErrors[0].message;
-
-                                            Scaffold.of(context)
-                                                .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  '${errorMssg[0].toUpperCase()}${errorMssg.substring(1)}'),
-                                            ));
+                                            Toast.show(
+                                              '${errorMssg[0].toUpperCase()}${errorMssg.substring(1)}',
+                                              context,
+                                              duration: Toast.LENGTH_SHORT,
+                                            );
                                           } else {
-                                            Scaffold.of(context)
-                                                .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  'User has been created.'),
-                                            ));
-
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => Home()),
+                                                  builder: (context) => Home(
+                                                      snackbarText:
+                                                          'User has been created')),
                                             );
                                           }
                                         } else {
-                                          Scaffold.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: Text(
-                                                'Please refer to the errors included in the form.'),
-                                          ));
+                                          Toast.show(
+                                            'Please refer to the errors included in the form.',
+                                            context,
+                                            duration: Toast.LENGTH_SHORT,
+                                          );
                                         }
                                       },
                                       child: Text(

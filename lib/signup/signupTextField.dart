@@ -9,6 +9,7 @@ class SignUpTextField extends StatefulWidget {
   final TextEditingController textEditingController;
   final bool isValid;
   final bool isEmpty;
+  final TextInputType textFieldType;
 
   SignUpTextField(
       {@required this.labelText,
@@ -17,7 +18,8 @@ class SignUpTextField extends StatefulWidget {
       this.invalidErrorText,
       this.textEditingController,
       this.isValid,
-      this.isEmpty});
+      this.isEmpty,
+      this.textFieldType});
 
   @override
   _SignUpTextFieldState createState() => _SignUpTextFieldState();
@@ -40,6 +42,7 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
       onChanged: (text) {
         widget.onTextChange(text);
       },
+      keyboardType: widget.textFieldType,
       decoration: InputDecoration(
           labelText: widget.labelText,
           errorText: this.determineErrorMssg(),

@@ -2,13 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import './services/graphqlConf.dart';
-import './login/loginSupport.dart';
 // import './services/graphqlConf.dart';
 import 'package:graphql/client.dart';
-import 'package:password/password.dart';
-import 'package:parkera/home.dart';
-import 'package:parkera/utils/firebase_auth.dart';
-import 'package:parkera/home.dart';
 import 'globals.dart' as globals;
 
 import "./addCar/addCarMut.dart";
@@ -51,15 +46,30 @@ class _car_info extends State<car_info> {
 
             // it can be either Map or List
             List repositories = result.data['carsByUserId'];
-            print(result.data['carsByUserId'][0]['color']);
-
             return ListView.builder(
                 itemCount: repositories.length,
 
                 itemBuilder: (context, index) {
                   final repository = repositories[index];
-
-                  return Text(repository['license']);
+                  return Card(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            title: Text(repository['license']),
+                            subtitle: Text(repository['model']),
+                          ),
+                          ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: const Text('Modify'),
+                                onPressed: () { /* ... */ },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                  );
                 });
           },
         )

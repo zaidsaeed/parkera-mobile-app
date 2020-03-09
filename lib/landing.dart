@@ -20,77 +20,84 @@ class Landing extends StatelessWidget {
                 ),
               ],
             )),
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('assets/images/landing.jpg'),
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.asset('assets/images/landing.jpg',
             fit: BoxFit.fill,
-          )),
-          child: Column(
-            children: <Widget>[
-              Container(),
-              SizedBox(height: 460.0),
-              Container(
-                  width: 250,
-                  height: 50.0,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(40.0),
-                    shadowColor: Colors.teal,
-                    color: Colors.teal,
-                    elevation: 7.0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Login()),
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w900,
-                              fontFamily: 'Lato'),
+            ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                    SizedBox(height: MediaQuery.of(context).size.height * .3),
+                    Container(
+                        width: 250,
+                        height: 50.0,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(40.0),
+                          shadowColor: Colors.teal,
+                          color: Colors.teal,
+                          elevation: 7.0,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Login()),
+                              );
+                            },
+                            child: Center(
+                              child: Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w900,
+                                    fontFamily: 'Lato'),
+                              ),
+                            ),
+                          ),
+                        )),
+
+                    SizedBox(height: MediaQuery.of(context).size.height * .03),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .6,
+                      height: MediaQuery.of(context).size.width * .13,
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.white,
+                                style: BorderStyle.solid,
+                                width: 2.0),
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(40.0)),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignUp()),
+                            );
+                          },
+                          child: Center(
+                            child: Text('Sign Up',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w900,
+                                    fontFamily: 'Lato')),
+                          ),
                         ),
                       ),
                     ),
-                  )),
-              SizedBox(height: 20.0),
-              Container(
-                width: 250,
-                height: 50.0,
-                color: Colors.transparent,
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.white,
-                          style: BorderStyle.solid,
-                          width: 2.0),
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(40.0)),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUp()),
-                      );
-                    },
-                    child: Center(
-                      child: Text('Sign Up',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w900,
-                              fontFamily: 'Lato')),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+
+                  ],
+
+            )
+          ],
+        )
       ),
     );
   }

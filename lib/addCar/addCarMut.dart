@@ -5,3 +5,15 @@ mutation AddCar(\$license: String!, \$model: String!, \$color: String!, \$userAc
   }
 }
 """;
+
+
+String queryByUid = """
+query GetcarsByUserId( \$nUid: Int!) {
+      carsByUserId(userAccountId: \$nUid) {
+        license,
+        model,
+        color
+    }
+}
+""";
+

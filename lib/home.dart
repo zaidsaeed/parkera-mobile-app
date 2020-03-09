@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
 import 'addCar/addCarInfoAlertDialogWindow.dart';
+import 'car_info.dart';
 
 
 class Home extends StatelessWidget {
@@ -71,7 +72,10 @@ class Home extends StatelessWidget {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => car_info()),
+                );
               },
             ),
             ListTile(

@@ -256,27 +256,6 @@ class _SignUpState extends State<SignUp> {
                                                 _userInfo['password'],
                                                 new PBKDF2())
                                           });
-                                          // if (result.hasException) {
-                                          //   var errorMssg = result.exception
-                                          //       .graphqlErrors[0].message;
-                                          //   Toast.show(
-                                          //     '${errorMssg[0].toUpperCase()}${errorMssg.substring(1)}',
-                                          //     context,
-                                          //     duration: Toast.LENGTH_SHORT,
-                                          //   );
-                                          // } else {
-                                          //   var userId = result
-                                          //       .data.data['addUser']['id'];
-                                          //   print(userId);
-                                          //   globals.userid = userId;
-                                          //   Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => Home(
-                                          //             snackbarText:
-                                          //                 'User has been created')),
-                                          //   );
-                                          // }
                                         } else {
                                           Toast.show(
                                             'Please refer to the errors included in the form.',

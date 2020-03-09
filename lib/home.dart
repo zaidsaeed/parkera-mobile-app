@@ -29,10 +29,13 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (this.snackbarText != null) {
-      Toast.show(this.snackbarText, context,
-          duration: 5, gravity: Toast.BOTTOM);
-    }
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (this.snackbarText != null) {
+        Toast.show(this.snackbarText, context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Floating Action Button',

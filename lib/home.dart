@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
 import 'addCar/addCarInfoAlertDialogWindow.dart';
 import 'package:toast/toast.dart';
+import 'car_info.dart';
 
 class Home extends StatelessWidget {
   final String snackbarText;
@@ -76,7 +77,10 @@ class Home extends StatelessWidget {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => car_info()),
+                );
               },
             ),
             ListTile(

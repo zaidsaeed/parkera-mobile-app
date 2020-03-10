@@ -2,32 +2,25 @@ import "package:flutter/material.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
 import 'CarDBHelper.dart';
 import 'listUserCars.dart';
+import 'package:toast/toast.dart';
 
 class ModifyCarInfoDialog extends StatefulWidget {
   final carInfo;
   final updateParentStatus;
-  ModifyCarInfoDialog({this.carInfo,this.updateParentStatus});
-
-  // final Person person;
-  // final bool isAdd;
+  ModifyCarInfoDialog({this.carInfo, this.updateParentStatus});
 
   @override
   State<StatefulWidget> createState() => _modifyCarInfoDialog();
 }
 
 class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
-  Map<String, String> _carInfo = new Map<String,String>();
-  //TextEditingController txLicense = TextEditingController();
-  //TextEditingController txtModel = TextEditingController();
-  //TextEditingController txtColor = TextEditingController();
-  // GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
-  // QueryMutation addMutation = QueryMutation();
+  Map<String, String> _carInfo = new Map<String, String>();
 
   @override
   void initState() {
-    _carInfo["license"]=widget.carInfo['license'];
-    _carInfo["model"]=widget.carInfo['model'];
-    _carInfo["color"]=widget.carInfo['color'];
+    _carInfo["license"] = widget.carInfo['license'];
+    _carInfo["model"] = widget.carInfo['model'];
+    _carInfo["color"] = widget.carInfo['color'];
     super.initState();
   }
 
@@ -47,14 +40,12 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
                   child: TextFormField(
                     initialValue: widget.carInfo['license'],
                     maxLength: 7,
-                    //controller: txtLicense,
-                    onChanged: (text){
+                    onChanged: (text) {
                       setState(() {
-                        _carInfo["license"]=text;
+                        _carInfo["license"] = text;
                         print(_carInfo);
                       });
                     },
-                    // enabled: this.isAdd,
                     decoration: InputDecoration(
                       icon: Icon(Icons.perm_identity),
                       labelText: "License",
@@ -66,10 +57,9 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
                   child: TextFormField(
                     maxLength: 40,
                     initialValue: widget.carInfo['model'],
-                    //controller: txtModel,
-                    onChanged: (text){
+                    onChanged: (text) {
                       setState(() {
-                        _carInfo["model"]=text;
+                        _carInfo["model"] = text;
                         print(_carInfo);
                       });
                     },
@@ -84,10 +74,9 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
                   child: TextFormField(
                     maxLength: 40,
                     initialValue: widget.carInfo['color'],
-                    //controller: txtColor,
-                    onChanged: (text){
+                    onChanged: (text) {
                       setState(() {
-                        _carInfo["color"]=text;
+                        _carInfo["color"] = text;
                         print(_carInfo);
                       });
                     },
@@ -105,53 +94,56 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
       actions: <Widget>[
         Mutation(
           options: MutationOptions(
-            documentNode: gql(updateCar), // this is the mutation string you just created
+            documentNode:
+                gql(updateCar), // this is the mutation string you just created
             // you can update the cache based on results
             update: (Cache cache, QueryResult result) {
-              print(result);
+              if (result.hasException) {
+                Toast.show(
+                    'Car information was not updated successfully. An error has occurred',
+                    context,
+                    duration: Toast.LENGTH_LONG,
+                    gravity: Toast.BOTTOM);
+              } else {
+                Toast.show(
+                    'Car Information was successfully modified.', context,
+                    duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+              }
+              Navigator.pop(
+                context,
+                MaterialPageRoute(builder: (context) => listUserCars()),
+              );
               return cache;
             },
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
-              var tmp = resultData.data['updateCar'][0];
               widget.updateParentStatus(resultData.data['updateCar']);
               print(resultData);
             },
           ),
           builder: (
-              RunMutation runMutation,
-              QueryResult result,
-              ) {
-            return  FlatButton(
+            RunMutation runMutation,
+            QueryResult result,
+          ) {
+            return FlatButton(
               child: Text("Modify Car Info"),
-              onPressed: () {runMutation({
-                'id':widget.carInfo['id'],
-                'license': _carInfo['license'],
-                'model': _carInfo['model'],
-                'color': _carInfo['color']
-              });
-              Navigator.pop(
-                context,
-                MaterialPageRoute(builder: (context) => listUserCars()),
-              );
+              onPressed: () {
+                runMutation({
+                  'id': widget.carInfo['id'],
+                  'license': _carInfo['license'],
+                  'model': _carInfo['model'],
+                  'color': _carInfo['color']
+                });
               },
             );
-
-
           },
         ),
-
-
-
-
         FlatButton(
             child: Text("Close"),
             onPressed: () {
               Navigator.of(context).pop();
             })
-
       ],
     );
-
   }
 }

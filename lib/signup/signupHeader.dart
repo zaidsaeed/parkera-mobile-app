@@ -10,25 +10,30 @@ class SignUpHeader extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * .04, MediaQuery.of(context).size.height * .1,
+                0.0, 0.0),
             child: Text(
               'Signup',
               style: TextStyle(
-                  fontSize: 80.0,
+                  fontSize: MediaQuery.of(context).size.height * .09,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Lato'),
             ),
           ),
+          /*
           Container(
-            padding: EdgeInsets.fromLTRB(260.0, 125.0, 0.0, 0.0),
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * .67, MediaQuery.of(context).size.height * .1
+                , 0.0, 0.0),
             child: Text(
               '.',
               style: TextStyle(
-                  fontSize: 80.0,
+                  fontSize: MediaQuery.of(context).size.height * .1,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal),
             ),
-          )
+          ) */
         ],
       ),
     );

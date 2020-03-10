@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
-import "./addCar/addCarMut.dart";
+import 'CarDBHelper.dart';
 import 'listUserCars.dart';
 
 class ModifyCarInfoDialog extends StatefulWidget {
@@ -34,7 +34,7 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Add Car Information"),
+      title: Text("Update Car Information"),
       content: Container(
         child: SingleChildScrollView(
           child: ConstrainedBox(
@@ -130,7 +130,7 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
                 'model': _carInfo['model'],
                 'color': _carInfo['color']
               });
-              Navigator.push(
+              Navigator.pop(
                 context,
                 MaterialPageRoute(builder: (context) => listUserCars()),
               );

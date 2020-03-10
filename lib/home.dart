@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
-import 'addCar/addCarInfoAlertDialogWindow.dart';
-import 'listUserCars.dart';
-
+import 'package:parkera/CarInfo/addCarInfoAlertDialogWindow.dart';
+import 'package:parkera/CarInfo/listUserCars.dart';
 
 class Home extends StatelessWidget {
+
   void _addParkingSpot(context) {
     showDialog(
       context: context,
@@ -28,6 +28,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Floating Action Button',

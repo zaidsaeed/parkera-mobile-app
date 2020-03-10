@@ -5,7 +5,9 @@ import 'listUserCars.dart';
 
 class ModifyCarInfoDialog extends StatefulWidget {
   final carInfo;
-  ModifyCarInfoDialog({this.carInfo});
+  final updateParentStatus;
+  ModifyCarInfoDialog({this.carInfo,this.updateParentStatus});
+
   // final Person person;
   // final bool isAdd;
 
@@ -111,6 +113,8 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
             },
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
+              var tmp = resultData.data['updateCar'][0];
+              widget.updateParentStatus(resultData.data['updateCar']);
               print(resultData);
             },
           ),

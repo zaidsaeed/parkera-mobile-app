@@ -4,6 +4,7 @@ import 'addParkingSpot/addParkingSpotDialogWindow.dart';
 import 'addCar/addCarInfoAlertDialogWindow.dart';
 import 'package:toast/toast.dart';
 import 'car_info.dart';
+import 'listUserCars.dart';
 
 class Home extends StatelessWidget {
   final String snackbarText;
@@ -79,7 +80,7 @@ class Home extends StatelessWidget {
                 // Then close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => car_info()),
+                  MaterialPageRoute(builder: (context) => listUserCars()),
                 );
               },
             ),

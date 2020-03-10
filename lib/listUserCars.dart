@@ -60,7 +60,16 @@ class _listUserCars extends State<listUserCars> {
 
   @override
   Widget build(BuildContext context) {
-    if (!loaded){ return CircularProgressIndicator(backgroundColor: Colors.white,);}
+    if (!loaded){
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(
+            value: 90,
+            backgroundColor: Colors.white,
+          ),
+        ),
+      );
+    }
     else{
       return MaterialApp(
         home: new Scaffold(

@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import './services/graphqlConf.dart';
-import './services/graphqlConf.dart';
 import 'package:graphql/client.dart';
+import 'package:parkera/home.dart';
 import 'globals.dart' as globals;
 
 import 'modifyCarInfoDialog.dart';
@@ -73,6 +73,9 @@ class _listUserCars extends State<listUserCars> {
     else{
       return MaterialApp(
         home: new Scaffold(
+          appBar: AppBar(
+            title: Text('You Cars'),
+          ),
             body: ListView.builder(
                 itemCount: this.usercarinfos.length,
 
@@ -100,7 +103,27 @@ class _listUserCars extends State<listUserCars> {
                       ],
                     ),
                   );
-                })
+                }),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.blue,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(
+                        Icons.home,
+                        color: Colors.white,
+                    ),
+                    onPressed: (){
+                      Navigator.pop(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                        );
+                      }
+                    )
+              ],
+            ),
+          ),
         ),
       );
 

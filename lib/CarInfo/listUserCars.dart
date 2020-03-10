@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import './services/graphqlConf.dart';
+import '../services/graphqlConf.dart';
 import 'package:graphql/client.dart';
 import 'package:parkera/home.dart';
-import 'globals.dart' as globals;
+import 'package:parkera/globals.dart' as globals;
 
 import 'modifyCarInfoDialog.dart';
 
-import "./addCar/addCarMut.dart";
+import 'CarDBHelper.dart';
 
 
 

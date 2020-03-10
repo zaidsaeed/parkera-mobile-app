@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
 import 'addCar/addCarInfoAlertDialogWindow.dart';
 import 'package:toast/toast.dart';
-import 'car_info.dart';
-import 'listUserCars.dart';
-
+import 'package:parkera/CarInfo/addCarInfoAlertDialogWindow.dart';
+import 'package:parkera/CarInfo/listUserCars.dart';
 class Home extends StatelessWidget {
   final String snackbarText;
   Home({this.snackbarText});
@@ -31,12 +30,15 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     Future.delayed(const Duration(milliseconds: 500), () {
       if (this.snackbarText != null) {
         Toast.show(this.snackbarText, context,
             duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
       }
     });
+=======
+>>>>>>> 710bdab... restructure CarInfo part
 
     return Scaffold(
       appBar: AppBar(

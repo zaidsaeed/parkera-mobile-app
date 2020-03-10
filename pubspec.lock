@@ -195,6 +195,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -202,6 +203,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
+=======
+  flutter_speed_dial:
+    dependency: "direct main"
+    description:
+      name: flutter_speed_dial
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.5"
+>>>>>>> 59cd5e7... added speed dial component
   flutter_test:
     dependency: "direct dev"
     description: flutter

@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
-import 'addCar/addCarInfoAlertDialogWindow.dart';
+import 'package:parkera/CarInfo/addCarInfoAlertDialogWindow.dart';
+import 'package:parkera/CarInfo/listUserCars.dart';
 import 'package:toast/toast.dart';
 
 class Home extends StatelessWidget {
@@ -77,6 +78,10 @@ class Home extends StatelessWidget {
                 // ...
                 // Then close the drawer
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => listUserCars()),
+                );
               },
             ),
             ListTile(

@@ -45,14 +45,13 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Floating Action Button',
-            style: TextStyle(fontFamily: 'Lato')),
+        backgroundColor: Color(0xFF00897B),
       ),
       body: googleMapComponent(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addParkingSpot(context),
         child: Icon(Icons.add),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.teal,
       ),
       drawer: Drawer(
         child: ListView(
@@ -62,7 +61,7 @@ class Home extends StatelessWidget {
             DrawerHeader(
               child: Text('My Action'),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color(0xFF00897B),
               ),
             ),
             ListTile(

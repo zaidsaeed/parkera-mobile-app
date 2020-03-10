@@ -3,8 +3,8 @@ import "package:flutter/material.dart";
 // import "../services/queryMutation.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
 // import "package:example/components/person.dart";
-import "./addCarMut.dart";
-import '../globals.dart' as globals;
+import "./CarDBHelper.dart";
+import 'package:parkera/globals.dart' as globals;
 
 class carInfoAlertDialog extends StatefulWidget {
   // final Person person;

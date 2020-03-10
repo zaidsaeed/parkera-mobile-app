@@ -6,7 +6,7 @@ import './login/loginSupport.dart';
 // import './services/graphqlConf.dart';
 import 'package:graphql/client.dart';
 import 'package:password/password.dart';
-import 'package:parkera/home.dart';
+import 'package:parkera/home/home.dart';
 import 'package:parkera/utils/firebase_auth.dart';
 import 'globals.dart' as globals;
 import 'package:toast/toast.dart';

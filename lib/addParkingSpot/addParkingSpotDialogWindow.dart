@@ -37,7 +37,7 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 160.0),
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * .2),
                   child: TextField(
                     maxLength: 40,
                     onChanged: (text){

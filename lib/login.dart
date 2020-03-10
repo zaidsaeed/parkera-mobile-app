@@ -7,8 +7,8 @@ import './login/loginSupport.dart';
 import 'package:graphql/client.dart';
 import 'package:password/password.dart';
 import 'package:parkera/home.dart';
-import 'package:parkera/utils/firebase_auth.dart';
-import 'package:parkera/home.dart';
+//import 'package:parkera/utils/firebase_auth.dart';
+//import 'package:parkera/home.dart';
 import 'globals.dart' as globals;
 
 
@@ -30,16 +30,19 @@ class _LoginState extends State<Login> {
               resizeToAvoidBottomPadding: false,
               body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+
                   children: <Widget>[
                     Container(
                       child: Stack(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                            padding: EdgeInsets.fromLTRB(
+                                15.0, MediaQuery.of(context).size.height * .2, 0.0, 0.0),
                             child: Text(
                               'Log In',
                               style: TextStyle(
-                                  fontSize: 80.0,
+                                  fontSize: MediaQuery.of(context).size.height * .1,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Lato'),
                             ),
@@ -48,7 +51,9 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * .05,
+                            left: 20.0, right: 20.0),
                         child: Column(
                           children: <Widget>[
                             TextField(
@@ -69,7 +74,7 @@ class _LoginState extends State<Login> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: Colors.green))),
                             ),
-                            SizedBox(height: 10.0),
+                            SizedBox(height: MediaQuery.of(context).size.height * .02),
                             TextField(
                               onChanged: (text) {
                                 setState(() {
@@ -87,6 +92,8 @@ class _LoginState extends State<Login> {
                                       borderSide: BorderSide(color: Colors.green))),
                               obscureText: true,
                             ),
+                            /*
+                            //Google Login Button
                             SizedBox(height: 10.0),
                             Container(
                               height: 40.0,
@@ -113,7 +120,9 @@ class _LoginState extends State<Login> {
                                   },
                                   child: Center(
 
-                                      child: FlatButton.icon( icon: Icon(Icons.mail), label: Text('Google',
+                                      child: FlatButton.icon(
+                                        icon: Icon(Icons.mail),
+                                        label: Text('Google',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'Lato')),)
@@ -122,6 +131,8 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
+                            //Google Login Button
+                            */
 
 
                             // TextField(
@@ -134,7 +145,7 @@ class _LoginState extends State<Login> {
                             //       focusedBorder: UnderlineInputBorder(
                             //           borderSide: BorderSide(color: Colors.green))),
                             // ),
-                            // SizedBox(height: 50.0),
+                            SizedBox(height: MediaQuery.of(context).size.height * .06),
                             Container(
                                 height: 40.0,
                                 child: Material(
@@ -206,7 +217,7 @@ class _LoginState extends State<Login> {
                                       )
                                 )
                             ),
-                            SizedBox(height: 20.0),
+                            SizedBox(height: MediaQuery.of(context).size.height * .03),
                             Container(
                               height: 40.0,
                               color: Colors.transparent,

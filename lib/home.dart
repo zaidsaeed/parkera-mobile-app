@@ -5,6 +5,7 @@ import 'addCar/addCarInfoAlertDialogWindow.dart';
 import 'package:toast/toast.dart';
 
 class Home extends StatelessWidget {
+
   final String snackbarText;
   Home({this.snackbarText});
   void _addParkingSpot(context) {
@@ -38,13 +39,11 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Floating Action Button',
-            style: TextStyle(fontFamily: 'Lato')),
+        backgroundColor: Color(0xFF00897B),
       ),
       body: Center(
           child: Column(children: <Widget>[
-        const Text('Press the button below!',
-            style: TextStyle(fontFamily: 'Lato')),
+            SizedBox(height: MediaQuery.of(context).size.height * .02),
         OutlineButton(
             child: new Text(
               "add a car",
@@ -57,7 +56,7 @@ class Home extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addParkingSpot(context),
         child: Icon(Icons.add),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.teal,
       ),
       drawer: Drawer(
         child: ListView(
@@ -67,7 +66,7 @@ class Home extends StatelessWidget {
             DrawerHeader(
               child: Text('My Action'),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color(0xFF00897B),
               ),
             ),
             ListTile(

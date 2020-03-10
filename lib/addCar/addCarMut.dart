@@ -10,10 +10,20 @@ mutation AddCar(\$license: String!, \$model: String!, \$color: String!, \$userAc
 String queryByUid = """
 query GetcarsByUserId( \$nUid: Int!) {
       carsByUserId(userAccountId: \$nUid) {
+        id,
         license,
         model,
         color
     }
 }
 """;
-
+String updateCar = """
+mutation UpdateCar(\$id: Int!, \$license: String!, \$model: String!, \$color: String!, ) {
+  updateCar(id: \$id, license: \$license, model: \$model, color: \$color) {
+    id,
+    license,
+    model,
+    color
+  }
+}
+""";

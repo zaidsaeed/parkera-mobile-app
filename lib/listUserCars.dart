@@ -6,18 +6,30 @@ import './services/graphqlConf.dart';
 import 'package:graphql/client.dart';
 import 'globals.dart' as globals;
 
+import 'modifyCarInfoDialog.dart';
+
 import "./addCar/addCarMut.dart";
 
 
 
-class car_info extends StatefulWidget {
+class listUserCars extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _car_info();
+    return _listUserCars();
   }
 }
 
-class _car_info extends State<car_info> {
+void _updateCarInfo(context,carInfo) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      ModifyCarInfoDialog carInalertDialogWindow = new ModifyCarInfoDialog(carInfo:carInfo,);
+      return carInalertDialogWindow;
+    },
+  );
+}
+
+class _listUserCars extends State<listUserCars> {
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
   @override
@@ -45,25 +57,25 @@ class _car_info extends State<car_info> {
             }
 
             // it can be either Map or List
-            List repositories = result.data['carsByUserId'];
+            List carInfos = result.data['carsByUserId'];
             return ListView.builder(
-                itemCount: repositories.length,
+                itemCount: carInfos.length,
 
                 itemBuilder: (context, index) {
-                  final repository = repositories[index];
+                  final carInfo = carInfos[index];
                   return Card(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           ListTile(
-                            title: Text(repository['license']),
-                            subtitle: Text(repository['model']),
+                            title: Text(carInfo['license']),
+                            subtitle: Text(carInfo['model']),
                           ),
                           ButtonBar(
                             children: <Widget>[
                               FlatButton(
                                 child: const Text('Modify'),
-                                onPressed: () { /* ... */ },
+                                onPressed: () => _updateCarInfo(context,carInfo),
                               ),
                             ],
                           ),

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
 import 'addCar/addCarInfoAlertDialogWindow.dart';
-import 'car_info.dart';
+import 'listUserCars.dart';
 
 
 class Home extends StatelessWidget {
@@ -74,7 +74,7 @@ class Home extends StatelessWidget {
                 // Then close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => car_info()),
+                  MaterialPageRoute(builder: (context) => listUserCars()),
                 );
               },
             ),

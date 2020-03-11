@@ -25,9 +25,10 @@ class Home extends StatelessWidget {
       ),
       drawer: HomeDrawer(),
       body: Center(
-          child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[HomeSpeedDial()])),
+          child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+        SizedBox(height: MediaQuery.of(context).size.height * .02),
+        HomeSpeedDial()
+      ])),
     );
   }
 }

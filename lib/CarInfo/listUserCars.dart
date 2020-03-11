@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../services/graphqlConf.dart';
 import 'package:graphql/client.dart';
-import 'package:parkera/home.dart';
+import 'package:parkera/home/home.dart';
 import 'package:parkera/globals.dart' as globals;
 
 import 'modifyCarInfoDialog.dart';
 
 import 'CarDBHelper.dart';
-
-
 
 class listUserCars extends StatefulWidget {
   @override
@@ -19,11 +17,14 @@ class listUserCars extends StatefulWidget {
   }
 }
 
-void _updateCarInfo(context,carInfo,updateParentStatus) {
+void _updateCarInfo(context, carInfo, updateParentStatus) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      ModifyCarInfoDialog carInalertDialogWindow = new ModifyCarInfoDialog(carInfo:carInfo,updateParentStatus: updateParentStatus,);
+      ModifyCarInfoDialog carInalertDialogWindow = new ModifyCarInfoDialog(
+        carInfo: carInfo,
+        updateParentStatus: updateParentStatus,
+      );
       return carInalertDialogWindow;
     },
   );
@@ -33,16 +34,16 @@ class _listUserCars extends State<listUserCars> {
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   var loaded = false;
   var usercarinfos;
-  void  initState() {
-    final GraphQLClient _client =
-    graphQLConfiguration.clientToQuery();
-    _client.query(QueryOptions(
-      documentNode:
-      gql(queryByUid),
+  void initState() {
+    final GraphQLClient _client = graphQLConfiguration.clientToQuery();
+    _client
+        .query(QueryOptions(
+      documentNode: gql(queryByUid),
       variables: <String, dynamic>{
-        'nUid':  globals.userid,
+        'nUid': globals.userid,
       },
-    )).then( (result) {
+    ))
+        .then((result) {
       if (result.hasException) {
         print(result.exception.toString());
       }
@@ -51,16 +52,12 @@ class _listUserCars extends State<listUserCars> {
         loaded = true;
       });
       return;
-
     });
-
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!loaded){
+    if (!loaded) {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(
@@ -69,41 +66,41 @@ class _listUserCars extends State<listUserCars> {
           ),
         ),
       );
-    }
-    else{
+    } else {
       return MaterialApp(
         home: new Scaffold(
           appBar: AppBar(
             title: Text("Your Cars"),
           ),
-            body: ListView.builder(
-                itemCount: this.usercarinfos.length,
-
-                itemBuilder: (context, index) {
-                  final carInfo = this.usercarinfos[index];
-                  return Card(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ListTile(
-                          title: Text(carInfo['license']),
-                          subtitle: Text(carInfo['model']),
-                        ),
-                        ButtonBar(
-                          children: <Widget>[
-                            FlatButton(
-                              child: const Text('Modify'),
-                              onPressed: () => _updateCarInfo(context,carInfo,(modifiedCarInfo){
-                                setState(() {
-                                  usercarinfos[index]=modifiedCarInfo;
-                                });}),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+          body: ListView.builder(
+              itemCount: this.usercarinfos.length,
+              itemBuilder: (context, index) {
+                final carInfo = this.usercarinfos[index];
+                return Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(carInfo['license']),
+                        subtitle: Text(carInfo['model']),
+                      ),
+                      ButtonBar(
+                        children: <Widget>[
+                          FlatButton(
+                            child: const Text('Modify'),
+                            onPressed: () => _updateCarInfo(context, carInfo,
+                                (modifiedCarInfo) {
+                              setState(() {
+                                usercarinfos[index] = modifiedCarInfo;
+                              });
+                            }),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }),
           bottomNavigationBar: BottomAppBar(
             color: Colors.blue,
             child: Row(
@@ -111,23 +108,20 @@ class _listUserCars extends State<listUserCars> {
               children: <Widget>[
                 IconButton(
                     icon: Icon(
-                        Icons.home,
-                        color: Colors.white,
+                      Icons.home,
+                      color: Colors.white,
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(
                         context,
                         MaterialPageRoute(builder: (context) => Home()),
-                        );
-                      }
-                    )
+                      );
+                    })
               ],
             ),
           ),
         ),
       );
-
     }
-
   }
 }

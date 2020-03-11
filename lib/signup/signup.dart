@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:parkera/home.dart';
+import 'package:parkera/home/home.dart';
 import '../signup/signupMutQueries.dart';
 import "package:graphql_flutter/graphql_flutter.dart";
 import 'package:password/password.dart';

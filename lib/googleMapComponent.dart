@@ -99,8 +99,8 @@ class _googleMapComponent extends State<googleMapComponent> {
           bearing: CAMERA_BEARING);
     }
 
-    return Scaffold(
-      body: GoogleMap(
+    return Expanded(
+      child: GoogleMap(
         myLocationEnabled: true,
         compassEnabled: true,
         tiltGesturesEnabled: false,

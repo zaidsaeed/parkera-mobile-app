@@ -103,8 +103,10 @@ class _googleMapComponent extends State<googleMapComponent> {
         mapType: MapType.normal,
         onMapCreated: _onMapCreated,
         initialCameraPosition: initialCameraPosition,
+        markers: _markers.values.toSet(),
 
       ),
+
     );
 
   }

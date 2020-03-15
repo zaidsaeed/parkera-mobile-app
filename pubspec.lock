@@ -203,7 +203,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> ed0647e... add google map to new home
   flutter_speed_dial:
     dependency: "direct main"
     description:
@@ -211,7 +214,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.5"
+<<<<<<< HEAD
 >>>>>>> 59cd5e7... added speed dial component
+=======
+>>>>>>> ed0647e... add google map to new home
   flutter_test:
     dependency: "direct dev"
     description: flutter

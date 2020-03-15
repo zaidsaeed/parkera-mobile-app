@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:location/location.dart';
 
 
@@ -23,6 +24,8 @@ class _googleMapComponent extends State<googleMapComponent> {
   Location location;
   LocationData currentLocation;
   LatLng _center;
+  GoogleMapPolyline googleMapPolyline =
+  new  GoogleMapPolyline(apiKey:  "AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8");
   void setInitialLocation() async {
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
@@ -46,6 +49,7 @@ class _googleMapComponent extends State<googleMapComponent> {
     currentLocation = await location.getLocation();
 
   }
+
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
@@ -57,14 +61,14 @@ class _googleMapComponent extends State<googleMapComponent> {
           position: LatLng(45.4231,-75.6831),
           infoWindow: InfoWindow(
             title: 'uottawa',
-            snippet: ' 75 Laurier Ave E, Ottawa, ON K1N 6N5',
+            snippet: '75 Laurier Ave E, Ottawa, ON K1N 6N5',
           ),
         );
-        _markers['uottawa'] = marker;
+
+      _markers['uottawa'] = marker;
 
     });
   }
-
 
   @override
   void initState() {
@@ -100,6 +104,7 @@ class _googleMapComponent extends State<googleMapComponent> {
         myLocationEnabled: true,
         compassEnabled: true,
         tiltGesturesEnabled: false,
+        zoomGesturesEnabled: true,
         mapType: MapType.normal,
         onMapCreated: _onMapCreated,
         initialCameraPosition: initialCameraPosition,

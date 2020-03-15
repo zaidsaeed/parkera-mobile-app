@@ -1,20 +1,17 @@
+import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'addParkingSpot/addParkingSpotDialogWindow.dart';
 import 'package:parkera/CarInfo/addCarInfoAlertDialogWindow.dart';
 import 'package:parkera/CarInfo/listUserCars.dart';
 import 'package:toast/toast.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:parkera/googleMapComponent.dart';
+
+
 
 
 class Home extends StatelessWidget {
-  GoogleMapController mapController;
 
-  final LatLng _center = LatLng(45.425533, -75.692482);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
 
   final String snackbarText;
   Home({this.snackbarText});
@@ -40,6 +37,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Future.delayed(const Duration(milliseconds: 500), () {
       if (this.snackbarText != null) {
         Toast.show(this.snackbarText, context,
@@ -52,13 +50,7 @@ class Home extends StatelessWidget {
         title: const Text('Floating Action Button',
             style: TextStyle(fontFamily: 'Lato')),
       ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 11.0,
-        ),
-      ),
+      body: googleMapComponent(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addParkingSpot(context),
         child: Icon(Icons.add),

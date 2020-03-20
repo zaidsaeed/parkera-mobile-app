@@ -28,8 +28,9 @@ class Home extends StatelessWidget {
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
             googleMapComponent(),
             //SizedBox(height: MediaQuery.of(context).size.height * .02),
-            HomeSpeedDial()
+
       ])),
+
     );
   }
 }

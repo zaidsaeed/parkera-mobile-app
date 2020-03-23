@@ -97,36 +97,22 @@ class _googleMapComponent extends State<googleMapComponent> {
   final Set<Polyline> _polyLines = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    LatLng sourceLoc = LatLng(currentLocation.latitude, currentLocation.longitude);
-    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: sourceLoc)));
-    String route = await _googleMapsServices.getRouteCoordinates(sourceLoc, LatLng(45.4231,-75.6831));
     setState((){
       _markers.clear();
         var destination =LatLng(45.4231,-75.6831);
-
         final marker = Marker(
           markerId: MarkerId('uottawa'),
           position: destination,
           infoWindow: InfoWindow(
             title: 'uottawa',
             snippet: '75 Laurier Ave E, Ottawa, ON K1N 6N5',
+            onTap: () {
+              _gotoLocation(destination.latitude,destination.longitude);
+            },
           ),
 
         );
         _markers['uottawa'] = marker;
-        _polyLines.add(Polyline(
-          polylineId: PolylineId(currentLocation.toString()),
-          width: 4,
-          points: _convertToLatLng(_decodePoly(route)),
-          color: Colors.red));
-
-
-
-
-
-
-
-
     });
 
 
@@ -180,5 +166,22 @@ class _googleMapComponent extends State<googleMapComponent> {
     );
 
   }
+
+  Future<void> _gotoLocation(double lat,double long) async {
+    LatLng sourceLoc = LatLng(currentLocation.latitude, currentLocation.longitude);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: sourceLoc, zoom: 15,tilt: 50.0,
+      bearing: 45.0,)));
+    String route = await _googleMapsServices.getRouteCoordinates(sourceLoc, LatLng(lat,long));
+    setState(() {
+      _polyLines.add(Polyline(
+          polylineId: PolylineId(currentLocation.toString()),
+          width: 4,
+          points: _convertToLatLng(_decodePoly(route)),
+          color: Colors.red));
+    });
+
+
+  }
+
 }
 

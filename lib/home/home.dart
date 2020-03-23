@@ -24,13 +24,12 @@ class Home extends StatelessWidget {
             style: TextStyle(fontFamily: 'Lato')),
       ),
       drawer: HomeDrawer(),
+      floatingActionButton: HomeSpeedDial(),
       body: Center(
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-            googleMapComponent(),
-            //SizedBox(height: MediaQuery.of(context).size.height * .02),
-
+        googleMapComponent()
+        //SizedBox(height: MediaQuery.of(context).size.height * .02),
       ])),
-
     );
   }
 }

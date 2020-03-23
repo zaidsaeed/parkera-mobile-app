@@ -19,10 +19,14 @@ class Home extends StatelessWidget {
     });
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Floating Action Button',
-            style: TextStyle(fontFamily: 'Lato')),
-      ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: new Icon(
+            Icons.menu,
+            color: Colors.black,
+          )),
       drawer: HomeDrawer(),
       floatingActionButton: HomeSpeedDial(),
       body: Center(

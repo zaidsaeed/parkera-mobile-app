@@ -97,6 +97,9 @@ class _googleMapComponent extends State<googleMapComponent> {
   final Set<Polyline> _polyLines = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+    LatLng sourceLoc = LatLng(currentLocation.latitude, currentLocation.longitude);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: sourceLoc, zoom: 15,tilt: 50.0,
+      bearing: 45.0,)));
     setState((){
       _markers.clear();
         var destination =LatLng(45.4231,-75.6831);
@@ -140,13 +143,6 @@ class _googleMapComponent extends State<googleMapComponent> {
         tilt: CAMERA_TILT,
         bearing: CAMERA_BEARING,
         target: SOURCE_LOCATION);
-    if (currentLocation != null) {
-      initialCameraPosition = CameraPosition(
-          target: LatLng(currentLocation.latitude, currentLocation.longitude),
-          zoom: CAMERA_ZOOM,
-          tilt: CAMERA_TILT,
-          bearing: CAMERA_BEARING);
-    }
 
     return Expanded (
       child: GoogleMap(

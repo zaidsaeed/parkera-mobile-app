@@ -15,7 +15,7 @@ class HomeDrawer extends StatelessWidget {
           DrawerHeader(
             child: Text('My Action'),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.teal,
             ),
           ),
           ListTile(

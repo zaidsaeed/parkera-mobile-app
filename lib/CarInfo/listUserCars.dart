@@ -71,6 +71,7 @@ class _listUserCars extends State<listUserCars> {
         home: new Scaffold(
           appBar: AppBar(
             title: Text("Your Cars"),
+            backgroundColor: Colors.teal,
           ),
           body: ListView.builder(
               itemCount: this.usercarinfos.length,
@@ -102,7 +103,7 @@ class _listUserCars extends State<listUserCars> {
                 );
               }),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.blue,
+            color: Colors.teal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

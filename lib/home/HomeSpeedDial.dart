@@ -35,31 +35,31 @@ class HomeSpeedDial extends StatelessWidget {
             child: SpeedDial(
               animatedIcon: AnimatedIcons.add_event,
               animatedIconTheme: IconThemeData(size: 22),
-              backgroundColor: Colors.blueAccent,
+              backgroundColor: Colors.teal,
               visible: true,
               curve: Curves.bounceIn,
               children: [
                 SpeedDialChild(
                     child: Icon(Icons.directions_car),
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.teal,
                     onTap: () => _addCarInfo(context),
                     label: 'Add Car',
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                         fontSize: 16.0),
-                    labelBackgroundColor: Colors.blueAccent),
+                    labelBackgroundColor: Colors.teal),
                 // FAB 2
                 SpeedDialChild(
                     child: Icon(Icons.local_parking),
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.teal,
                     onTap: () => _addParkingSpot(context),
                     label: 'Add Parking Spot',
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                         fontSize: 16.0),
-                    labelBackgroundColor: Colors.blueAccent)
+                    labelBackgroundColor: Colors.teal)
               ],
             )));
   }

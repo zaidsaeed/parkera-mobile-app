@@ -126,7 +126,8 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
             QueryResult result,
           ) {
             return FlatButton(
-              child: Text("Modify Car Info"),
+              child:
+                  Text("Modify Car Info", style: TextStyle(color: Colors.teal)),
               onPressed: () {
                 runMutation({
                   'id': widget.carInfo['id'],
@@ -139,7 +140,7 @@ class _modifyCarInfoDialog extends State<ModifyCarInfoDialog> {
           },
         ),
         FlatButton(
-            child: Text("Close"),
+            child: Text("Close", style: TextStyle(color: Colors.teal)),
             onPressed: () {
               Navigator.of(context).pop();
             })

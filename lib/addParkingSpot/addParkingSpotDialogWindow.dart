@@ -77,7 +77,8 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
             QueryResult result,
           ) {
             return FlatButton(
-              child: Text("Add Parking Spot"),
+              child: Text("Add Parking Spot",
+                  style: TextStyle(color: Colors.teal)),
               onPressed: () {
                 runMutation({
                   'address': _parkingSpotInfo['address'],
@@ -88,7 +89,7 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
           },
         ),
         FlatButton(
-            child: Text("Close"),
+            child: Text("Close", style: TextStyle(color: Colors.teal)),
             onPressed: () {
               Navigator.of(context).pop();
             }),

@@ -119,7 +119,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
             QueryResult result,
           ) {
             return FlatButton(
-              child: Text("Add Car Info"),
+              child: Text("Add Car Info", style: TextStyle(color: Colors.teal)),
               onPressed: () {
                 runMutation({
                   'license': _carInfo['license'],
@@ -132,7 +132,7 @@ class _carInfoAlertDialog extends State<carInfoAlertDialog> {
           },
         ),
         FlatButton(
-            child: Text("Close"),
+            child: Text("Close", style: TextStyle(color: Colors.teal)),
             onPressed: () {
               Navigator.of(context).pop();
             })

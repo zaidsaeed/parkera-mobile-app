@@ -88,7 +88,8 @@ class _listUserCars extends State<listUserCars> {
                       ButtonBar(
                         children: <Widget>[
                           FlatButton(
-                            child: const Text('Modify'),
+                            child: const Text('Modify',
+                                style: TextStyle(color: Colors.teal)),
                             onPressed: () => _updateCarInfo(context, carInfo,
                                 (modifiedCarInfo) {
                               setState(() {

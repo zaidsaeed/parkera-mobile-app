@@ -11,8 +11,10 @@ class SignUpHeader extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(
-                MediaQuery.of(context).size.width * .04, MediaQuery.of(context).size.height * .1,
-                0.0, 0.0),
+                MediaQuery.of(context).size.width * .04,
+                MediaQuery.of(context).size.height * .1,
+                0.0,
+                0.0),
             child: Text(
               'Signup',
               style: TextStyle(
@@ -21,19 +23,6 @@ class SignUpHeader extends StatelessWidget {
                   fontFamily: 'Lato'),
             ),
           ),
-          /*
-          Container(
-            padding: EdgeInsets.fromLTRB(
-                MediaQuery.of(context).size.width * .67, MediaQuery.of(context).size.height * .1
-                , 0.0, 0.0),
-            child: Text(
-              '.',
-              style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * .1,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal),
-            ),
-          ) */
         ],
       ),
     );

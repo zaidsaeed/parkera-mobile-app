@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:location/location.dart';
 import 'package:parkera/googleMapsServices.dart';
 
@@ -47,8 +46,9 @@ class _googleMapComponent extends State<googleMapComponent> {
         return;
       }
     }
-    currentLocation = await location.getLocation();
-
+    setState(() async {
+      currentLocation = await location.getLocation();
+    });
   }
 
 
@@ -129,9 +129,7 @@ class _googleMapComponent extends State<googleMapComponent> {
       // Use current location
       currentLocation = cld;
     });
-
     setInitialLocation();
-
   }
 
 

@@ -3,6 +3,8 @@ import "package:graphql_flutter/graphql_flutter.dart";
 import "./addParkingSpotMut.dart";
 import '../globals.dart' as globals;
 import 'package:toast/toast.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 
 class AlertDialogWindow extends StatefulWidget {
   @override
@@ -11,10 +13,20 @@ class AlertDialogWindow extends StatefulWidget {
 
 class _AlertDialogWindow extends State<AlertDialogWindow> {
   Map<String, String> _parkingSpotInfo = new Map<String, String>();
-
+  TextEditingController _editingController;
   @override
   void initState() {
     super.initState();
+    _editingController = TextEditingController();
+  }
+  void _getLatLng(Prediction prediction) async {
+    GoogleMapsPlaces _places = new
+    GoogleMapsPlaces(apiKey: "AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8");  //Same API_KEY as above
+    PlacesDetailsResponse detail =
+    await _places.getDetailsByPlaceId(prediction.placeId);
+    double latitude = detail.result.geometry.location.lat;
+    double longitude = detail.result.geometry.location.lng;
+    String address = prediction.description;
   }
 
   @override
@@ -33,9 +45,25 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * .2),
                   child: TextField(
+                    controller: _editingController,
                     maxLength: 40,
-                    onChanged: (text) {
-                      _parkingSpotInfo['address'] = text;
+                    onTap: () async{
+                      Prediction prediction = await PlacesAutocomplete.show(
+                          context: context,
+                          apiKey: "AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8",
+                          mode: Mode.fullscreen, // Mode.overlay
+                          language: "en",
+                          components: [Component(Component.country, "ca")]);
+                      if (prediction!=null){
+                        setState(() {
+                          _editingController.text = prediction.description;
+                        });
+
+                      }
+                    },
+                    onSubmitted: (text) {
+                      _parkingSpotInfo['Address']=text;
+                      print(_parkingSpotInfo['Address']);
                     },
                     decoration: InputDecoration(
                       icon: Icon(Icons.text_rotate_vertical),

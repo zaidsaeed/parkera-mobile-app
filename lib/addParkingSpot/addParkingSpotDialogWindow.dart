@@ -19,15 +19,6 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
     super.initState();
     _editingController = TextEditingController();
   }
-  void _getLatLng(Prediction prediction) async {
-    GoogleMapsPlaces _places = new
-    GoogleMapsPlaces(apiKey: "AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8");  //Same API_KEY as above
-    PlacesDetailsResponse detail =
-    await _places.getDetailsByPlaceId(prediction.placeId);
-    double latitude = detail.result.geometry.location.lat;
-    double longitude = detail.result.geometry.location.lng;
-    String address = prediction.description;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +36,9 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * .2),
                   child: TextField(
+                    textInputAction: TextInputAction.go,
                     controller: _editingController,
-                    maxLength: 40,
+                    maxLength: 60,
                     onTap: () async{
                       Prediction prediction = await PlacesAutocomplete.show(
                           context: context,
@@ -55,15 +47,21 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                           language: "en",
                           components: [Component(Component.country, "ca")]);
                       if (prediction!=null){
+                        GoogleMapsPlaces _places = new
+                        GoogleMapsPlaces(apiKey: "AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8");
+                        PlacesDetailsResponse detail =
+                        await _places.getDetailsByPlaceId(prediction.placeId);
                         setState(() {
                           _editingController.text = prediction.description;
+                          _parkingSpotInfo['latitude']= detail.result.geometry.location.lat.toString();
+                          _parkingSpotInfo['longitude'] = detail.result.geometry.location.lng.toString();
                         });
 
                       }
                     },
                     onSubmitted: (text) {
                       _parkingSpotInfo['Address']=text;
-                      print(_parkingSpotInfo['Address']);
+                      print(_parkingSpotInfo);
                     },
                     decoration: InputDecoration(
                       icon: Icon(Icons.text_rotate_vertical),

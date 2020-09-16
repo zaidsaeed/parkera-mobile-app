@@ -34,9 +34,23 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * .2),
+                      top: MediaQuery.of(context).size.height * .1),
                   child: TextField(
                     textInputAction: TextInputAction.go,
+                    maxLength: 20,
+                    onChanged: (text) {
+                      _parkingSpotInfo['price']=text;
+                      print(_parkingSpotInfo);
+                    },
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.text_rotate_vertical),
+                      labelText: "price",
+                    ),
+                  ),
+                ),
+                Container(
+
+                  child: TextField(
                     controller: _editingController,
                     maxLength: 60,
                     onTap: () async{
@@ -55,20 +69,17 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                           _editingController.text = prediction.description;
                           _parkingSpotInfo['latitude']= detail.result.geometry.location.lat.toString();
                           _parkingSpotInfo['longitude'] = detail.result.geometry.location.lng.toString();
+                          _parkingSpotInfo['Address']=prediction.description;
                         });
-
                       }
-                    },
-                    onSubmitted: (text) {
-                      _parkingSpotInfo['Address']=text;
-                      print(_parkingSpotInfo);
                     },
                     decoration: InputDecoration(
                       icon: Icon(Icons.text_rotate_vertical),
                       labelText: "Address",
                     ),
                   ),
-                ),
+                )
+
               ],
             ),
           ),

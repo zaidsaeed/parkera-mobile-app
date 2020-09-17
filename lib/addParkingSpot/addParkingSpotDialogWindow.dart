@@ -69,7 +69,8 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                           _editingController.text = prediction.description;
                           _parkingSpotInfo['latitude']= detail.result.geometry.location.lat.toString();
                           _parkingSpotInfo['longitude'] = detail.result.geometry.location.lng.toString();
-                          _parkingSpotInfo['Address']=prediction.description;
+                          _parkingSpotInfo['address']=prediction.description;
+
                         });
                       }
                     },
@@ -119,7 +120,10 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
               onPressed: () {
                 runMutation({
                   'address': _parkingSpotInfo['address'],
-                  'userAccountId': globals.userid
+                  'userAccountId': globals.userid.toString(),
+                  'latitude': double.parse(_parkingSpotInfo['latitude']),
+                  'longitude': double.parse(_parkingSpotInfo['longitude']),
+                  'price': double.parse(_parkingSpotInfo['price']),
                 });
               },
             );

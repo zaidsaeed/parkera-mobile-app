@@ -120,7 +120,7 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
               onPressed: () {
                 runMutation({
                   'address': _parkingSpotInfo['address'],
-                  'userAccountId': globals.userid.toString(),
+                  'userAccountId': globals.userid,
                   'latitude': double.parse(_parkingSpotInfo['latitude']),
                   'longitude': double.parse(_parkingSpotInfo['longitude']),
                   'price': double.parse(_parkingSpotInfo['price']),

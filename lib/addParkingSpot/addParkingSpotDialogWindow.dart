@@ -57,7 +57,7 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                       Prediction prediction = await PlacesAutocomplete.show(
                           context: context,
                           apiKey: "AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8",
-                          mode: Mode.fullscreen, // Mode.overlay
+                          mode: Mode.overlay, // Mode.overlay
                           language: "en",
                           components: [Component(Component.country, "ca")]);
                       if (prediction!=null){

@@ -5,3 +5,12 @@ mutation AddParkingSpot(\$address: String!,\$userAccountId: Int!, \$latitude: Fl
   }
 }
 """;
+
+
+String queryByUid = """
+query GetParkingSpotsByUserId( \$nUid: Int!) {
+      parkingSpotsByUserId(userAccountId: \$nUid) {
+        address
+    }
+}
+""";

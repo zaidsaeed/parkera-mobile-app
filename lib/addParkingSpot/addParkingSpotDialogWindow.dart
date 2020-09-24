@@ -118,13 +118,21 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
               child: Text("Add Parking Spot",
                   style: TextStyle(color: Colors.teal)),
               onPressed: () {
-                runMutation({
-                  'address': _parkingSpotInfo['address'],
-                  'userAccountId': globals.userid,
-                  'latitude': double.parse(_parkingSpotInfo['latitude']),
-                  'longitude': double.parse(_parkingSpotInfo['longitude']),
-                  'price': double.parse(_parkingSpotInfo['price']),
-                });
+                if(!_parkingSpotInfo.containsKey('address')){
+                  Toast.show('Please enter address', context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }else if(!_parkingSpotInfo.containsKey('price')){
+                  Toast.show('Please enter price', context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }else{
+                  runMutation({
+                    'address': _parkingSpotInfo['address'],
+                    'userAccountId': globals.userid,
+                    'latitude': double.parse(_parkingSpotInfo['latitude']),
+                    'longitude': double.parse(_parkingSpotInfo['longitude']),
+                    'price': double.parse(_parkingSpotInfo['price']),
+                  });
+                }
               },
             );
           },

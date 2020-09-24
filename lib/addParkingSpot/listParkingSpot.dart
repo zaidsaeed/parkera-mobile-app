@@ -83,6 +83,7 @@ class _listParkingSpots extends State<listParkingSpots> {
                     children: <Widget>[
                       ListTile(
                         title: Text(parkingSpotsInfo['address']),
+                        subtitle: Text(parkingSpotsInfo['price'].toString()),
                       ),
                       ButtonBar(
                         children: <Widget>[

@@ -136,14 +136,21 @@ class _modifyParkingSpotDialog extends State<modifyParkingSpotDialog> {
               child:
               Text("Modify Parking Spot Info", style: TextStyle(color: Colors.teal)),
               onPressed: () {
-                runMutation({
-                  'id': widget.parkingSpotInfo['id'],
-                  'address': _parkingSpotInfo['address'],
-                  'latitude': double.parse(_parkingSpotInfo['latitude']),
-                  'longitude': double.parse(_parkingSpotInfo['longitude']),
-                  'price': double.parse(_parkingSpotInfo['price'])
-                });
-              },
+                if(!_parkingSpotInfo.containsKey('address')){
+                  Toast.show('Please enter address', context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }else if(!_parkingSpotInfo.containsKey('price')){
+                  Toast.show('Please enter price', context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }else{
+                  runMutation({
+                    'id': widget.parkingSpotInfo['id'],
+                    'address': _parkingSpotInfo['address'],
+                    'latitude': double.parse(_parkingSpotInfo['latitude']),
+                    'longitude': double.parse(_parkingSpotInfo['longitude']),
+                    'price': double.parse(_parkingSpotInfo['price'])
+                  });
+                }},
             );
           },
         ),

@@ -6,9 +6,9 @@ import 'package:graphql/client.dart';
 import 'package:parkera/home/home.dart';
 import 'package:parkera/globals.dart' as globals;
 
-//import 'modifyCarInfoDialog.dart';
+import 'modifyParkingSpot.dart';
 
-import 'addParkingSpotMut.dart';
+import 'parkingSpotHelper.dart';
 
 class listParkingSpots extends StatefulWidget {
   @override
@@ -17,18 +17,18 @@ class listParkingSpots extends StatefulWidget {
   }
 }
 
-/*void _updateCarInfo(context, carInfo, updateParentStatus) {
+void _updateParkingSpotInfo(context, parkingSpotInfo, updateParentStatus) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      ModifyCarInfoDialog carInalertDialogWindow = new ModifyCarInfoDialog(
-        carInfo: carInfo,
+      modifyParkingSpotDialog modifyParkingSpotWindow = new modifyParkingSpotDialog(
+        parkingSpotInfo: parkingSpotInfo,
         updateParentStatus: updateParentStatus,
       );
-      return carInalertDialogWindow;
+      return modifyParkingSpotWindow;
     },
   );
-}*/
+}
 
 class _listParkingSpots extends State<listParkingSpots> {
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
@@ -89,12 +89,12 @@ class _listParkingSpots extends State<listParkingSpots> {
                           FlatButton(
                             child: const Text('Modify',
                                 style: TextStyle(color: Colors.teal)),
-                            onPressed: () => /*_updateCarInfo(context, carInfo,
-                                    (modifiedCarInfo) {
+                            onPressed: () => _updateParkingSpotInfo(context, parkingSpotsInfo,
+                                    (modifiedParkingSpotsInfo) {
                                   setState(() {
-                                    usercarinfos[index] = modifiedCarInfo;
+                                    this.parkingSpotsInfo[index]=modifiedParkingSpotsInfo;
                                   });
-                                }),*/{},
+                                }),
                           ),
                         ],
                       ),

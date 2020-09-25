@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:location/location.dart';
 import 'package:parkera/googleMapsServices.dart';
 
@@ -47,8 +46,9 @@ class _googleMapComponent extends State<googleMapComponent> {
         return;
       }
     }
-    currentLocation = await location.getLocation();
-
+    setState(() async {
+      currentLocation = await location.getLocation();
+    });
   }
 
 
@@ -95,30 +95,11 @@ class _googleMapComponent extends State<googleMapComponent> {
 
   final Map<String, Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  Future<void> _onMapCreated(GoogleMapController controller){
     mapController = controller;
     LatLng sourceLoc = LatLng(currentLocation.latitude, currentLocation.longitude);
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: sourceLoc, zoom: 15,tilt: 50.0,
       bearing: 45.0,)));
-    setState((){
-      _markers.clear();
-        var destination =LatLng(45.4231,-75.6831);
-        final marker = Marker(
-          markerId: MarkerId('uottawa'),
-          position: destination,
-          infoWindow: InfoWindow(
-            title: 'uottawa',
-            snippet: '75 Laurier Ave E, Ottawa, ON K1N 6N5',
-            onTap: () {
-              _gotoLocation(destination.latitude,destination.longitude);
-            },
-          ),
-
-        );
-        _markers['uottawa'] = marker;
-    });
-
-
   }
 
   @override
@@ -129,9 +110,7 @@ class _googleMapComponent extends State<googleMapComponent> {
       // Use current location
       currentLocation = cld;
     });
-
     setInitialLocation();
-
   }
 
 

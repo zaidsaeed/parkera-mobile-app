@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/CarInfo/listUserCars.dart';
+import 'package:parkera/addParkingSpot/listParkingSpot.dart';
+
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({Key key}) : super(key: key);
@@ -32,12 +34,16 @@ class HomeDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Item 2'),
+            title: Text('Show all My park spots'),
             onTap: () {
               // Update the state of the app
               // ...
               // Then close the drawer
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => listParkingSpots()),
+              );
             },
           ),
         ],

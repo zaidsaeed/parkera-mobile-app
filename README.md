@@ -1,16 +1,16 @@
-# parkera
+# Parkera <br>
 
-A new Flutter project.
+This repository holds the code to the front end of our application - Parkera. Parkera is a mobile application which allows users to rent out their residential parking spots to other users. <br>
 
-## Getting Started
+## Team
 
-This project is a starting point for a Flutter application.
+Zaid Saeed - 8621155 <br>
+Anthony Sabbagh - 8735782 <br>
+Pacifique N. Cyusa - 8522431 <br>
+Weihao Huang - 7952021 <br>
 
-A few resources to get you started if this is your first Flutter project:
+## App Screenshots <br>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Home Page <br>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="./README-IMAGES/homepage.jpg"/>

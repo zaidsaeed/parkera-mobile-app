@@ -13,4 +13,4 @@ Weihao Huang - 7952021 <br>
 
 ### Home Page <br>
 
-<img src="./README-IMAGES/homepage.jpg" height="10px" width="10px"/>
+<img src="./README-IMAGES/homepage.jpg" height="200px" width="200px"/>

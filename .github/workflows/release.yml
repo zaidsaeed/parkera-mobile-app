@@ -39,15 +39,15 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '1.17.0'
-    - name: Get version.txt
-      uses: actions/download-artifact@v2
-      with:
-        name: gitversion
-    - name: Read version
-      id: version
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: version.txt
+    #- name: Get version.txt
+    # uses: actions/download-artifact@v2
+    #  with:
+     #   name: gitversion
+   # - name: Read version
+    #  id: version
+    #  uses: juliangruber/read-file-action@v1
+    #  with:
+    #    path: version.txt
     - run: flutter pub get
     - run: flutter test
     - run: flutter build apk --release --split-per-abi

@@ -28,8 +28,9 @@ jobs:
       #      run: flutter test
       - name: 'Build APK'
         run: flutter build apk
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/upload-artifact@v1
         with:
+          name: release-apk
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./releases
+          path: build/app/outputs/apk/release/app-release.apk
+          

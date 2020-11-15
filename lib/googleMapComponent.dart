@@ -159,19 +159,27 @@ class _googleMapComponent extends State<googleMapComponent> {
             markers: _markers.values.toSet(),
             polylines: _polyLines,
           ),
-          SearchMapPlaceWidget(
-            hasClearButton: true,
-            placeType: PlaceType.address,
-            placeholder: 'Enter destination',
-            apiKey: 'AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8',
-            onSelected: (Place place) async{
-              Geolocation geolocation = await place.geolocation;
-              mapController.animateCamera(
-                  CameraUpdate.newLatLng(geolocation.coordinates));
-              mapController.animateCamera(
-                  CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
-            },
+          Container(
+            padding: EdgeInsets.fromLTRB(
+                15.0,
+                MediaQuery.of(context).size.height * .1,
+                0.0,
+                0.0),
+            child: SearchMapPlaceWidget(
+              hasClearButton: true,
+              placeType: PlaceType.address,
+              placeholder: 'Enter destination',
+              apiKey: 'AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8',
+              onSelected: (Place place) async{
+                Geolocation geolocation = await place.geolocation;
+                mapController.animateCamera(
+                    CameraUpdate.newLatLng(geolocation.coordinates));
+                mapController.animateCamera(
+                    CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
+              },
+            ),
           )
+
         ],
       )
 

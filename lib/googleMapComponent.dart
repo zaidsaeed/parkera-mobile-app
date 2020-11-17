@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:parkera/googleMapsServices.dart';
+import 'package:parkera/orderDialogWindow.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
@@ -25,6 +26,8 @@ class _googleMapComponent extends State<googleMapComponent> {
   double selectedLat;
   double selectedLng;
   bool _isOrderVisible;
+  String _parkposition;
+  String _price;
   final controller = PageController(
     initialPage: 0,
   );
@@ -100,7 +103,18 @@ class _googleMapComponent extends State<googleMapComponent> {
     return result;
   }
 
-  GoogleMapController get Mapcontroller =>mapController;
+  void _orderDialog(context, parkaddress, parkprice) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        orderDialog orderWindow = new orderDialog(
+            parkposition : parkaddress,
+            price: parkprice,
+        );
+        return orderWindow;
+      },
+    );
+  }
 
 
 
@@ -160,6 +174,8 @@ class _googleMapComponent extends State<googleMapComponent> {
     setInitialLocation();
     setState(() {
       _isOrderVisible = false;
+      _price = "";
+      _parkposition = "";
     });
   }
 
@@ -222,72 +238,9 @@ class _googleMapComponent extends State<googleMapComponent> {
                       });
                     },
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            var destination =LatLng(45.4231,-75.6831);
-                            mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: destination, zoom: 15,tilt: 50.0,
-                              bearing: 45.0,)));
-                            setState(() {
-                              _isOrderVisible = true;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  child: Text("uottawa",style: TextStyle(fontSize: 25.0,color: Colors.green),)
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                child: Text("(\$7)",style: TextStyle(fontSize: 25.0, color: Colors.blueAccent)),
-                              ),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            var destination =LatLng(45.425433, -75.680701);
-                            mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: destination, zoom: 15,tilt: 50.0,
-                              bearing: 45.0,)));
-                            setState(() {
-                              _isOrderVisible = true;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  child: Text("point1",style: TextStyle(fontSize: 25.0,color: Colors.green),)
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                child: Text("(\$10)",style: TextStyle(fontSize: 25.0, color: Colors.blueAccent)),
-                              ),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            var destination =LatLng(45.416046, -75.672340);
-                            mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: destination, zoom: 15,tilt: 50.0,
-                              bearing: 45.0,)));
-                            setState(() {
-                              _isOrderVisible = true;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  child: Text("point2",style: TextStyle(fontSize: 25.0,color: Colors.green),)
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                child: Text("(\$11)",style: TextStyle(fontSize: 25.0, color: Colors.blueAccent)),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ResultInfoWindow(LatLng(45.4231,-75.6831),"uottawa","\$7"),
+                        ResultInfoWindow(LatLng(45.425433, -75.680701),"point1","\$10"),
+                        ResultInfoWindow(LatLng(45.416046, -75.672340),"point2","\$11"),
                       ],
                   )
               ),
@@ -298,8 +251,9 @@ class _googleMapComponent extends State<googleMapComponent> {
                     padding: EdgeInsets.only(bottom: 10),
                     child: FloatingActionButton.extended(
                       icon: Icon(Icons.navigation),
-                      label: Text("Order"),
-                      backgroundColor: Colors.green,
+                        onPressed: () => _orderDialog(context,_parkposition,_price),
+                        label: Text("Order"),
+                        backgroundColor: Colors.green,
                     ),
                   )
               ),
@@ -322,5 +276,31 @@ class _googleMapComponent extends State<googleMapComponent> {
       bearing: 45.0,)));
     }
 
+
+    Widget ResultInfoWindow(LatLng destination, String name, String price){
+      return GestureDetector(
+        onTap: () {
+          mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: destination, zoom: 15,tilt: 50.0,
+            bearing: 45.0,)));
+          setState(() {
+            _isOrderVisible = true;
+            _parkposition = name;
+            _price = price;
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+                child: Text(name,style: TextStyle(fontSize: 25.0,color: Colors.green),)
+            ),
+            SizedBox(width: 10),
+            Container(
+              child: Text("("+price+")",style: TextStyle(fontSize: 25.0, color: Colors.blueAccent)),
+            ),
+          ],
+        ),
+      );
+    }
 }
 

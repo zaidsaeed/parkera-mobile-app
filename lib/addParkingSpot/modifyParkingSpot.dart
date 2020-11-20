@@ -1,29 +1,41 @@
 import "package:flutter/material.dart";
 import "package:graphql_flutter/graphql_flutter.dart";
-import "./parkingSpotHelper.dart";
-import '../globals.dart' as globals;
+import 'parkingSpotHelper.dart';
+import 'listParkingSpot.dart';
 import 'package:toast/toast.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 
-class AlertDialogWindow extends StatefulWidget {
+class modifyParkingSpotDialog extends StatefulWidget {
+  final parkingSpotInfo;
+  final updateParentStatus;
+  modifyParkingSpotDialog({this.parkingSpotInfo, this.updateParentStatus});
+
   @override
-  State<StatefulWidget> createState() => _AlertDialogWindow();
+  State<StatefulWidget> createState() => _modifyParkingSpotDialog();
 }
 
-class _AlertDialogWindow extends State<AlertDialogWindow> {
+class _modifyParkingSpotDialog extends State<modifyParkingSpotDialog> {
   Map<String, String> _parkingSpotInfo = new Map<String, String>();
   TextEditingController _editingController;
+
+
+
   @override
   void initState() {
-    super.initState();
+    _parkingSpotInfo["address"] = widget.parkingSpotInfo['address'];
+    _parkingSpotInfo["price"] = widget.parkingSpotInfo['price'].toString();
+    _parkingSpotInfo["latitude"] = widget.parkingSpotInfo['latitude'].toString();
+    _parkingSpotInfo["longitude"] = widget.parkingSpotInfo['longitude'].toString();
     _editingController = TextEditingController();
+    _editingController.text = widget.parkingSpotInfo['address'];
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Add Parking Spot"),
+      title: Text("Update Parking Spot Information"),
       content: Container(
         child: SingleChildScrollView(
           child: ConstrainedBox(
@@ -33,23 +45,6 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * .1),
-                  child: TextField(
-                    textInputAction: TextInputAction.go,
-                    maxLength: 20,
-                    onChanged: (text) {
-                      _parkingSpotInfo['price']=text;
-                      print(_parkingSpotInfo);
-                    },
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.text_rotate_vertical),
-                      labelText: "price",
-                    ),
-                  ),
-                ),
-                Container(
-
                   child: TextField(
                     controller: _editingController,
                     maxLength: 60,
@@ -79,7 +74,24 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                       labelText: "Address",
                     ),
                   ),
-                )
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 80.0),
+                  child: TextFormField(
+                    maxLength: 40,
+                    initialValue: _parkingSpotInfo["price"],
+                    onChanged: (text) {
+                      setState(() {
+                        _parkingSpotInfo["price"] = text;
+                        print(_parkingSpotInfo);
+                      });
+                    },
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.text_format),
+                      labelText: "Price",
+                    ),
+                  ),
+                ),
 
               ],
             ),
@@ -89,34 +101,40 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
       actions: <Widget>[
         Mutation(
           options: MutationOptions(
-            documentNode: gql(
-                addParkingSpotMutation), // this is the mutation string you just created
+            documentNode:
+            gql(updateParkingSpot), // this is the mutation string you just created
             // you can update the cache based on results
             update: (Cache cache, QueryResult result) {
               if (result.hasException) {
-                Toast.show('Parking spot was not added. An error has occurred',
+                Toast.show(
+                    'Parking Spot information was not updated successfully. An error has occurred',
                     context,
-                    duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                Navigator.of(context).pop();
+                    duration: Toast.LENGTH_LONG,
+                    gravity: Toast.BOTTOM);
               } else {
-                Toast.show('Parking spot was added.', context,
+                Toast.show(
+                    'Parking Spot Information was successfully modified.', context,
                     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                Navigator.of(context).pop();
               }
+              Navigator.pop(
+                context,
+                MaterialPageRoute(builder: (context) => listParkingSpots()),
+              );
               return cache;
             },
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
+              widget.updateParentStatus(resultData.data['updateParkingSpot']);
               print(resultData);
             },
           ),
           builder: (
-            RunMutation runMutation,
-            QueryResult result,
-          ) {
+              RunMutation runMutation,
+              QueryResult result,
+              ) {
             return FlatButton(
-              child: Text("Add Parking Spot",
-                  style: TextStyle(color: Colors.teal)),
+              child:
+              Text("Modify Parking Spot Info", style: TextStyle(color: Colors.teal)),
               onPressed: () {
                 if(!_parkingSpotInfo.containsKey('address')){
                   Toast.show('Please enter address', context,
@@ -126,14 +144,13 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
                       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                 }else{
                   runMutation({
+                    'id': widget.parkingSpotInfo['id'],
                     'address': _parkingSpotInfo['address'],
-                    'userAccountId': globals.userid,
                     'latitude': double.parse(_parkingSpotInfo['latitude']),
                     'longitude': double.parse(_parkingSpotInfo['longitude']),
-                    'price': double.parse(_parkingSpotInfo['price']),
+                    'price': double.parse(_parkingSpotInfo['price'])
                   });
-                }
-              },
+                }},
             );
           },
         ),
@@ -141,7 +158,7 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
             child: Text("Close", style: TextStyle(color: Colors.teal)),
             onPressed: () {
               Navigator.of(context).pop();
-            }),
+            })
       ],
     );
   }

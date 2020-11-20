@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:parkera/googleMapsServices.dart';
+import 'package:search_map_place/search_map_place.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
@@ -124,17 +125,42 @@ class _googleMapComponent extends State<googleMapComponent> {
         target: SOURCE_LOCATION);
 
     return Expanded (
-      child: GoogleMap(
-        myLocationEnabled: true,
-        compassEnabled: true,
-        tiltGesturesEnabled: false,
-        zoomGesturesEnabled: true,
-        mapType: MapType.normal,
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: initialCameraPosition,
-        markers: _markers.values.toSet(),
-        polylines: _polyLines,
-      ),
+      child: Stack(
+        children: <Widget>[
+          GoogleMap(
+            myLocationEnabled: true,
+            compassEnabled: true,
+            tiltGesturesEnabled: false,
+            zoomGesturesEnabled: true,
+            mapType: MapType.normal,
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: initialCameraPosition,
+            markers: _markers.values.toSet(),
+            polylines: _polyLines,
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(
+                15.0,
+                MediaQuery.of(context).size.height * .1,
+                0.0,
+                0.0),
+            child: SearchMapPlaceWidget(
+              hasClearButton: true,
+              placeType: PlaceType.address,
+              placeholder: 'Enter destination',
+              apiKey: 'AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8',
+              onSelected: (Place place) async{
+                Geolocation geolocation = await place.geolocation;
+                mapController.animateCamera(
+                    CameraUpdate.newLatLng(geolocation.coordinates));
+                mapController.animateCamera(
+                    CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
+              },
+            ),
+          )
+
+        ],
+      )
 
 
 
@@ -146,17 +172,7 @@ class _googleMapComponent extends State<googleMapComponent> {
     LatLng sourceLoc = LatLng(currentLocation.latitude, currentLocation.longitude);
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: sourceLoc, zoom: 15,tilt: 50.0,
       bearing: 45.0,)));
-    String route = await _googleMapsServices.getRouteCoordinates(sourceLoc, LatLng(lat,long));
-    setState(() {
-      _polyLines.add(Polyline(
-          polylineId: PolylineId(currentLocation.toString()),
-          width: 4,
-          points: _convertToLatLng(_decodePoly(route)),
-          color: Colors.red));
-    });
 
-
-  }
-
+}
 }
 

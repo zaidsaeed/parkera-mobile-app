@@ -19,8 +19,6 @@ class _modifyParkingSpotDialog extends State<modifyParkingSpotDialog> {
   Map<String, String> _parkingSpotInfo = new Map<String, String>();
   TextEditingController _editingController;
 
-
-
   @override
   void initState() {
     _parkingSpotInfo["address"] = widget.parkingSpotInfo['address'];
@@ -47,7 +45,7 @@ class _modifyParkingSpotDialog extends State<modifyParkingSpotDialog> {
                 Container(
                   child: TextField(
                     controller: _editingController,
-                    maxLength: 60,
+                    maxLength: 80,
                     onTap: () async{
                       Prediction prediction = await PlacesAutocomplete.show(
                           context: context,

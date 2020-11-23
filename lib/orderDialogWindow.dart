@@ -1,22 +1,28 @@
 import "package:flutter/material.dart";
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:parkera/googleMapComponent.dart';
+import 'package:toast/toast.dart';
+import 'globals.dart' as globals;
+import 'googleHelper.dart';
+
+
 
 
 class orderDialog extends StatefulWidget {
-  final parkposition;
-  final price;
-  orderDialog({this.parkposition, this.price});
-
+  final parkPositionInfo;
+  final updateParentStatus;
+  orderDialog({this.parkPositionInfo, this.updateParentStatus});
   @override
   State<StatefulWidget> createState() => _orderDialog();
 }
 
 class _orderDialog extends State<orderDialog> {
-  Map<String, String> _orderInfo = new Map<String, String>();
+  Map<String, dynamic> _orderInfo = new Map<String, dynamic>();
 
   @override
   void initState() {
-    _orderInfo["address"] = widget.parkposition;
-    _orderInfo["price"] = widget.price;
+    _orderInfo = widget.parkPositionInfo;
+
     super.initState();
   }
 
@@ -38,7 +44,7 @@ class _orderDialog extends State<orderDialog> {
                 ),
                 Container(
                     padding: EdgeInsets.only(top: 20),
-                    child: Text(widget.parkposition,style: TextStyle(fontSize: 25.0, color: Colors.blueAccent)),
+                    child: Text(_orderInfo['address'],style: TextStyle(fontSize: 25.0, color: Colors.blueAccent)),
                 ),
 
               ],
@@ -47,29 +53,32 @@ class _orderDialog extends State<orderDialog> {
         ),
       ),
       actions: <Widget>[
-        /*Mutation(
+        Mutation(
           options: MutationOptions(
-            documentNode: gql(
-                addCarMutation), // this is the mutation string you just created
+            documentNode:
+            gql(addOrder), // this is the mutation string you just created
             // you can update the cache based on results
             update: (Cache cache, QueryResult result) {
               if (result.hasException) {
                 Toast.show(
-                    'Car Information was not added. An error has occurred',
+                    'Ordering parking Spot was not updated successfully. An error has occurred',
                     context,
                     duration: Toast.LENGTH_LONG,
                     gravity: Toast.BOTTOM);
-                Navigator.of(context).pop();
               } else {
-                Toast.show('Car Information was added.', context,
+                Toast.show(
+                    'Ordering parking Spot was successfully modified.', context,
                     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                Navigator.of(context).pop();
               }
+              Navigator.pop(
+                context,
+                MaterialPageRoute(builder: (context) => googleMapComponent()),
+              );
               return cache;
             },
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
-              print(resultData);
+              widget.updateParentStatus(_orderInfo);
             },
           ),
           builder: (
@@ -77,13 +86,16 @@ class _orderDialog extends State<orderDialog> {
               QueryResult result,
               ) {
             return FlatButton(
-              child: Text("Add Car Info", style: TextStyle(color: Colors.teal)),
+              child:
+              Text("Ordered", style: TextStyle(color: Colors.teal)),
               onPressed: () {
-
-              },
+                runMutation({
+                  'userAccountId': globals.userid,
+                  'parkSpotId':_orderInfo['id'],
+                });},
             );
           },
-        ),*/
+        ),
         FlatButton(
             child: Text("Close", style: TextStyle(color: Colors.teal)),
             onPressed: () {

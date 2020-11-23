@@ -9,6 +9,8 @@ import 'package:search_map_place/search_map_place.dart';
 import 'googleHelper.dart';
 import 'package:parkera/orderDialogWindow.dart';
 import 'main.dart';
+import 'package:parkera/googleMapsServices.dart';
+
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
@@ -25,12 +27,11 @@ class googleMapComponent extends StatefulWidget {
 
 class _googleMapComponent extends State<googleMapComponent> {
   GoogleMapController mapController;
-
+  googleMapsServices _googleMapsServices = googleMapsServices();
   double selectedLat;
   double selectedLng;
   bool _isOrderVisible;
-  String _price;
-  String _parkposition;
+  Map<String, dynamic> _parkposition = new Map<String, dynamic>();
   LatLng sourceLoc;
   final Map<String, Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
@@ -54,8 +55,7 @@ class _googleMapComponent extends State<googleMapComponent> {
     super.initState();
     setState(() {
       _isOrderVisible = false;
-      _price = "";
-      _parkposition = "";
+      _parkposition = null;
     });
   }
 
@@ -94,11 +94,17 @@ class _googleMapComponent extends State<googleMapComponent> {
               placeType: PlaceType.address,
               placeholder: 'Enter destination',
               apiKey: 'AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8',
-
+              onSearch: (Place place) {
+                setState(() {
+                  _pages.clear();
+                  _markers.clear();
+                  _polyLines.clear();
+                });},
               onSelected: (Place place) async{
                 setState(() {
                   _pages.clear();
                   _markers.clear();
+                  _polyLines.clear();
                 });
                 Geolocation geolocation = await place.geolocation;
                 mapController.animateCamera(
@@ -115,8 +121,6 @@ class _googleMapComponent extends State<googleMapComponent> {
                     variables: <String, dynamic>{
                       'dlatitude': areaLocation.latitude,
                       'dlongitude':areaLocation.longitude
-
-                // ignore: missing_return
                 },)).then((result) {
                     if (result.hasException) {
                       print(result.exception.toString());
@@ -124,8 +128,16 @@ class _googleMapComponent extends State<googleMapComponent> {
                     List<dynamic> parkingSpotsInfo = result.data['searchNear'].toList();
                     parkingSpotsInfo.forEach((element) {
                       LatLng spotLL = new LatLng(element['latitude'], element['longitude']);
+                      Map<String, dynamic> _spotInfo = new Map<String, dynamic>();
+                      _spotInfo['id'] = element['id'];
+                      _spotInfo['latitude'] = element['latitude'];
+                      _spotInfo['longitude'] = element['longitude'];
+                      _spotInfo['address'] = element['address'];
+                      _spotInfo['price'] = element['price'];
+
+
                       setState(() {
-                        _pages.add(ResultInfoWindow(spotLL,element['address'],element['price'].toString()));
+                        _pages.add(ResultInfoWindow(spotLL,element['address'],element['price'].toString(),_spotInfo));
                         createMarker(spotLL,element['id'].toString(),element['address'],element['price'].toString());
                       });
                     });
@@ -190,13 +202,23 @@ class _googleMapComponent extends State<googleMapComponent> {
                   padding: EdgeInsets.only(bottom: 10),
                   child: FloatingActionButton.extended(
                     icon: Icon(Icons.navigation),
-                    onPressed: () => _orderDialog(context,_parkposition,_price),
+                    onPressed: () => _orderDialog(context,_parkposition, (orderedSpots) {
+                      setState(() {
+                        _markers.clear();
+                        _pages.clear();
+                        LatLng spotLL = new LatLng(orderedSpots['latitude'], orderedSpots['longitude']);
+                        createMarker(spotLL, orderedSpots['id'].toString(), orderedSpots['address'],orderedSpots['price'].toString());
+                        _isOrderVisible = false;
+                        _drawPolyline(spotLL);
+                      });
+                    }),
+
                     label: Text("Order"),
                     backgroundColor: Colors.green,
                   ),
                 )
             ),
-          )
+          ),
         ],
       )
 
@@ -206,21 +228,22 @@ class _googleMapComponent extends State<googleMapComponent> {
 
   }
 
-  void _orderDialog(context, parkaddress, parkprice) {
+  void _orderDialog(context, parkPositionInfo, updateParentStatus) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         orderDialog orderWindow = new orderDialog(
-          parkposition : parkaddress,
-          price: parkprice,
+          parkPositionInfo: parkPositionInfo,
+          updateParentStatus: updateParentStatus,
         );
         return orderWindow;
       },
     );
   }
 
+
   void createMarker(LatLng position, String id, String address, String price ){
-    final marker2 = Marker(
+    final marker = Marker(
       markerId: MarkerId(id),
       position: position,
       infoWindow: InfoWindow(
@@ -229,20 +252,19 @@ class _googleMapComponent extends State<googleMapComponent> {
       ),
 
     );
-    _markers[id] = marker2;
+    _markers[id] = marker;
   }
 
 
 
-  Widget ResultInfoWindow(LatLng destination, String name, String price){
+  Widget ResultInfoWindow(LatLng destination, String name, String price, Map<String, dynamic> spotelement){
     return GestureDetector(
       onTap: () {
         mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: destination, zoom: 15,tilt: 50.0,
           bearing: 45.0,)));
         setState(() {
           _isOrderVisible = true;
-          _parkposition = name;
-          _price = price;
+          _parkposition = spotelement;
         });
       },
       child: Row(
@@ -257,6 +279,60 @@ class _googleMapComponent extends State<googleMapComponent> {
         ],
       ),
     );
+  }
+
+
+  Future<void> _drawPolyline(LatLng destination) async {
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: sourceLoc, zoom: 13.5,tilt: 50.0,
+      bearing: 45.0,)));
+    String route = await _googleMapsServices.getRouteCoordinates(sourceLoc, destination);
+    setState(() {
+      _polyLines.add(Polyline(
+          polylineId: PolylineId('navi'),
+          width: 4,
+          points: _convertToLatLng(_decodePoly(route)),
+          color: Colors.red));
+    });
+  }
+
+  List _decodePoly(String poly) {
+    var list = poly.codeUnits;
+    var lList = new List();
+    int index = 0;
+    int len = poly.length;
+    int c = 0;
+    do {
+      var shift = 0;
+      int result = 0;
+
+      do {
+        c = list[index] - 63;
+        result |= (c & 0x1F) << (shift * 5);
+        index++;
+        shift++;
+      } while (c >= 32);
+      if (result & 1 == 1) {
+        result = ~result;
+      }
+      var result1 = (result >> 1) * 0.00001;
+      lList.add(result1);
+    } while (index < len);
+
+    for (var i = 2; i < lList.length; i++) lList[i] += lList[i - 2];
+
+    print(lList.toString());
+
+    return lList;
+  }
+
+  List<LatLng> _convertToLatLng(List points) {
+    List<LatLng> result = <LatLng>[];
+    for (int i = 0; i < points.length; i++) {
+      if (i % 2 != 0) {
+        result.add(LatLng(points[i - 1], points[i]));
+      }
+    }
+    return result;
   }
 }
 

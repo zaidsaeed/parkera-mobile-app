@@ -199,7 +199,7 @@ class _orderDialog extends State<orderDialog> {
                     gravity: Toast.BOTTOM);
               } else {
                 Toast.show(
-                    'Ordering parking Spot was successfully modified.', context,
+                    'Ordering parking Spot was successfully created.', context,
                     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
               }
               Navigator.pop(

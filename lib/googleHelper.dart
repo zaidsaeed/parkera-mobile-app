@@ -11,8 +11,8 @@ query searchNear( \$dlatitude: Float!, \$dlongitude: Float!) {
 """;
 
 String addOrder = """
-mutation addBooking(\$userAccountId: Int!,\$parkSpotId: Int!,) {
-  addBooking(userAccountId: \$userAccountId, parkSpotId: \$parkSpotId) {
+mutation addBooking(\$userAccountId: Int!,\$parkSpotId: Int!,\$carInfoId: Int!) {
+  addBooking(userAccountId: \$userAccountId, parkSpotId: \$parkSpotId, carInfoId: \$carInfoId) {
     id
   }
 }

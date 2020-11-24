@@ -121,7 +121,7 @@ class _googleMapComponent extends State<googleMapComponent> {
                     variables: <String, dynamic>{
                       'dlatitude': areaLocation.latitude,
                       'dlongitude':areaLocation.longitude
-                },)).then((result) {
+                })).then((result) {
                     if (result.hasException) {
                       print(result.exception.toString());
                     }

@@ -32,6 +32,7 @@ class _orderDialog extends State<orderDialog> {
   List<DropdownMenuItem<UserCar>> _dropdownMenuItems = [];
   UserCar _selectUserCar;
 
+  int _parkTime = 1;
 
   @override
   void initState() {
@@ -62,7 +63,6 @@ class _orderDialog extends State<orderDialog> {
           child: Text("Enter new car"),
         ),);
         _selectUserCar = _dropdownMenuItems[0].value;
-        print(_selectUserCar.modelWLlicense);
         loaded = true;
       });
       return;
@@ -210,6 +210,7 @@ class _orderDialog extends State<orderDialog> {
             },
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
+              _orderInfo['duration'] = _parkTime;
               widget.updateParentStatus(_orderInfo);
             },
           ),
@@ -221,6 +222,7 @@ class _orderDialog extends State<orderDialog> {
               child:
               Text("Ordered", style: TextStyle(color: Colors.teal)),
               onPressed: () async {
+                _orderInfo['modelWLlicense'] = _selectUserCar.modelWLlicense;
                 if(_selectUserCar.id==-1){
                   final GraphQLClient _client =
                   graphQLConfiguration.clientToQuery();
@@ -237,17 +239,26 @@ class _orderDialog extends State<orderDialog> {
                       print(result.exception.toString());
                     }
                     _orderInfo['carId'] = result.data['addCar']['id'];
+                    _orderInfo['modelWLlicense'] = _newCarInfo['model'] + ' ' + _newCarInfo['license'];
                   return;
                   });
                 }
                 runMutation({
                   'userAccountId': globals.userid,
                   'parkSpotId':_orderInfo['id'],
-                  'carInfoId':_orderInfo['carId']
+                  'carInfoId':_orderInfo['carId'],
+                  'duration' :_parkTime,
                   });
                 },
             );
           },
+        ),
+        new Row(
+          children: <Widget>[
+            _parkTime!=1? new  IconButton(icon: new Icon(Icons.remove),onPressed: ()=>setState(()=>_parkTime--),):new Container(),
+            new Text(_parkTime.toString()+(_parkTime==1 ? ' hour' : ' hours')),
+            new IconButton(icon: new Icon(Icons.add),onPressed: ()=>setState(()=>_parkTime++))
+          ],
         ),
         FlatButton(
             child: Text("Close", style: TextStyle(color: Colors.teal)),

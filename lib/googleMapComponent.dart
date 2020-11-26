@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -25,18 +26,26 @@ class googleMapComponent extends StatefulWidget {
 }
 
 
-class _googleMapComponent extends State<googleMapComponent> {
+class _googleMapComponent extends State<googleMapComponent> with TickerProviderStateMixin{
   GoogleMapController mapController;
   googleMapsServices _googleMapsServices = googleMapsServices();
   double selectedLat;
   double selectedLng;
   bool _isOrderVisible;
+  bool _isBooked;
+  String modelWLlicense;
   Map<String, dynamic> _parkposition = new Map<String, dynamic>();
   LatLng sourceLoc;
   final Map<String, Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
-
   final List<Widget> _pages = <Widget>[];
+  AnimationController _animationController;
+
+  String get timerString{
+    Duration duration = _animationController.duration * _animationController.value;
+    return '${duration.inHours}:${(duration.inMinutes % 60 ).toString().padLeft(2,'0')}:${(duration.inSeconds % 60 ).toString().padLeft(2,'0')}';
+  }
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -55,8 +64,15 @@ class _googleMapComponent extends State<googleMapComponent> {
     super.initState();
     setState(() {
       _isOrderVisible = false;
+      _isBooked = false;
       _parkposition = null;
+      modelWLlicense = "";
     });
+    _animationController = AnimationController(
+      duration: Duration(hours: 1),
+      vsync: this
+    );
+
   }
 
 
@@ -83,45 +99,47 @@ class _googleMapComponent extends State<googleMapComponent> {
             markers: _markers.values.toSet(),
             polylines: _polyLines,
           ),
-          Container(
-            padding: EdgeInsets.fromLTRB(
-                15.0,
-                MediaQuery.of(context).size.height * .1,
-                0.0,
-                0.0),
-            child: SearchMapPlaceWidget(
-              hasClearButton: true,
-              placeType: PlaceType.address,
-              placeholder: 'Enter destination',
-              apiKey: 'AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8',
-              onSearch: (Place place) {
-                setState(() {
-                  _pages.clear();
-                  _markers.clear();
-                  _polyLines.clear();
-                });},
-              onSelected: (Place place) async{
-                setState(() {
-                  _pages.clear();
-                  _markers.clear();
-                  _polyLines.clear();
-                });
-                Geolocation geolocation = await place.geolocation;
-                mapController.animateCamera(
-                    CameraUpdate.newLatLng(geolocation.coordinates));
-                mapController.animateCamera(
-                    CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
-                print(geolocation.coordinates.toString());
-                LatLng areaLocation = geolocation.coordinates;
+          Visibility(
+            visible: !_isBooked,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(
+                  15.0,
+                  MediaQuery.of(context).size.height * .1,
+                  0.0,
+                  0.0),
+              child: SearchMapPlaceWidget(
+                hasClearButton: true,
+                placeType: PlaceType.address,
+                placeholder: 'Enter destination',
+                apiKey: 'AIzaSyC5VziP787dJWjz-FGiH6pica_oWyF0Yk8',
+                onSearch: (Place place) {
+                  setState(() {
+                    _pages.clear();
+                    _markers.clear();
+                    _polyLines.clear();
+                  });},
+                onSelected: (Place place) async{
+                  setState(() {
+                    _pages.clear();
+                    _markers.clear();
+                    _polyLines.clear();
+                  });
+                  Geolocation geolocation = await place.geolocation;
+                  mapController.animateCamera(
+                      CameraUpdate.newLatLng(geolocation.coordinates));
+                  mapController.animateCamera(
+                      CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
+                  print(geolocation.coordinates.toString());
+                  LatLng areaLocation = geolocation.coordinates;
 
-                final GraphQLClient _client =
-                graphQLConfiguration.clientToQuery();
-                final QueryResult r = await _client.query(QueryOptions(
-                    documentNode: gql(searchNear),
-                    variables: <String, dynamic>{
-                      'dlatitude': areaLocation.latitude,
-                      'dlongitude':areaLocation.longitude
-                })).then((result) {
+                  final GraphQLClient _client =
+                  graphQLConfiguration.clientToQuery();
+                  final QueryResult r = await _client.query(QueryOptions(
+                      documentNode: gql(searchNear),
+                      variables: <String, dynamic>{
+                        'dlatitude': areaLocation.latitude,
+                        'dlongitude':areaLocation.longitude
+                      })).then((result) {
                     if (result.hasException) {
                       print(result.exception.toString());
                     }
@@ -143,12 +161,49 @@ class _googleMapComponent extends State<googleMapComponent> {
                     });
 
                     return;
-                });
+                  });
 
 
-              },
+                },
+              ),
             ),
-          ),AnimatedPositioned(
+          ),
+          Visibility(
+            visible: _isBooked,
+            child: AnimatedBuilder(
+              animation: _animationController,
+              builder: (BuildContext context, Widget child){
+                return new Positioned(
+                  top:MediaQuery.of(context).size.height * 0.1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(30.0)
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          spreadRadius: 0,
+                          blurRadius: 20,
+                          offset: Offset(0, 0.5),
+                          // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                     children: [
+                       Text(modelWLlicense+' ',style: TextStyle(fontSize: 25.0,color: Colors.green)),
+                       Text(timerString,style: TextStyle(fontSize: 25.0,color: Colors.blue)),
+                     ],
+                    )
+                  ),
+                );
+              },
+            )
+          ),
+          AnimatedPositioned(
             duration: Duration(milliseconds: 500),
             bottom: 0,
             child:Visibility(
@@ -210,11 +265,42 @@ class _googleMapComponent extends State<googleMapComponent> {
                         createMarker(spotLL, orderedSpots['id'].toString(), orderedSpots['address'],orderedSpots['price'].toString());
                         _isOrderVisible = false;
                         _drawPolyline(spotLL);
+                        _isBooked = true;
+                        _animationController.duration = Duration(hours: orderedSpots['duration']);
+                        modelWLlicense = orderedSpots['modelWLlicense'];
                       });
+                      _animationController.reverse(from: _animationController.value == 0.0 ? 1.0 : _animationController.value);
+
                     }),
 
                     label: Text("Order"),
                     backgroundColor: Colors.green,
+                  ),
+                )
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Visibility(
+                visible: _isBooked,
+                child: Container(
+                  height: 45,
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: FloatingActionButton.extended(
+                    icon: Icon(Icons.stop),
+                    onPressed: () {
+                      setState(() {
+                        _isBooked = false;
+                        _animationController.stop();
+                        _animationController.reset();
+                        _markers.clear();
+                        _polyLines.clear();
+                        _parkposition.clear();
+                        modelWLlicense="";
+                      });
+                    },
+                    label: Text("stop"),
+                    backgroundColor: Colors.red,
                   ),
                 )
             ),

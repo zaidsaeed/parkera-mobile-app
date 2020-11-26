@@ -29,7 +29,6 @@ dependencies:
   geolocator: ^6.0.0+4
   search_map_place: ^0.3.0
   google_map_polyline: ^0.2.0+1
-  location: ^2.5.4
   google_maps_webservice: ^0.0.18
   flutter_google_places: ^0.2.6
 

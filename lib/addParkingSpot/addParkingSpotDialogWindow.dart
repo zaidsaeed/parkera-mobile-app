@@ -52,7 +52,7 @@ class _AlertDialogWindow extends State<AlertDialogWindow> {
 
                   child: TextField(
                     controller: _editingController,
-                    maxLength: 60,
+                    maxLength: 80,
                     onTap: () async{
                       Prediction prediction = await PlacesAutocomplete.show(
                           context: context,

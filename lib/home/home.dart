@@ -32,7 +32,9 @@ class Home extends StatelessWidget {
                 _scaffoldKey.currentState.openDrawer();
               })),
       drawer: HomeDrawer(),
+/*
       floatingActionButton: HomeSpeedDial(),
+*/
       body: Center(
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
         googleMapComponent()

@@ -7,7 +7,7 @@ import 'package:parkera/home/home.dart';
 import 'package:parkera/globals.dart' as globals;
 
 import 'modifyCarInfoDialog.dart';
-
+import 'addCarInfoAlertDialogWindow.dart';
 import 'CarDBHelper.dart';
 
 class listUserCars extends StatefulWidget {
@@ -25,6 +25,15 @@ void _updateCarInfo(context, carInfo, updateParentStatus) {
         carInfo: carInfo,
         updateParentStatus: updateParentStatus,
       );
+      return carInalertDialogWindow;
+    },
+  );
+}
+void _addCarInfo(context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      carInfoAlertDialog carInalertDialogWindow = new carInfoAlertDialog();
       return carInalertDialogWindow;
     },
   );
@@ -103,6 +112,18 @@ class _listUserCars extends State<listUserCars> {
                   ),
                 );
               }),
+          floatingActionButton: FloatingActionButton.extended(
+            icon: Icon(Icons.directions_car),
+            backgroundColor: Colors.teal,
+            onPressed: () => _addCarInfo(context),
+            label: Text(
+              'Add Car',
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 16.0),
+            ),
+          ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.teal,
             child: Row(

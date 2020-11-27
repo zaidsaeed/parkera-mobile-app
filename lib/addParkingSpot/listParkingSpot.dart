@@ -7,6 +7,7 @@ import 'package:parkera/home/home.dart';
 import 'package:parkera/globals.dart' as globals;
 
 import 'modifyParkingSpot.dart';
+import 'addParkingSpotDialogWindow.dart';
 
 import 'parkingSpotHelper.dart';
 
@@ -15,6 +16,16 @@ class listParkingSpots extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _listParkingSpots();
   }
+}
+
+void _addParkingSpot(context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      AlertDialogWindow alertDialogWindow = new AlertDialogWindow();
+      return alertDialogWindow;
+    },
+  );
 }
 
 void _updateParkingSpotInfo(context, parkingSpotInfo, updateParentStatus) {
@@ -103,6 +114,17 @@ class _listParkingSpots extends State<listParkingSpots> {
                   ),
                 );
               }),
+          floatingActionButton: FloatingActionButton.extended(
+              icon: Icon(Icons.local_parking),
+              backgroundColor: Colors.teal,
+              onPressed: () => _addParkingSpot(context),
+              label: Text(
+                'Add Parking Spot',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 16.0),)
+              ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.teal,
             child: Row(

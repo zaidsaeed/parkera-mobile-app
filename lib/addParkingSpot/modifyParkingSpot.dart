@@ -25,6 +25,8 @@ class _modifyParkingSpotDialog extends State<modifyParkingSpotDialog> {
     _parkingSpotInfo["price"] = widget.parkingSpotInfo['price'].toString();
     _parkingSpotInfo["latitude"] = widget.parkingSpotInfo['latitude'].toString();
     _parkingSpotInfo["longitude"] = widget.parkingSpotInfo['longitude'].toString();
+    _parkingSpotInfo["isUsing"] = widget.parkingSpotInfo['isUsing'].toString();
+
     _editingController = TextEditingController();
     _editingController.text = widget.parkingSpotInfo['address'];
     super.initState();
@@ -122,7 +124,9 @@ class _modifyParkingSpotDialog extends State<modifyParkingSpotDialog> {
             },
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
-              widget.updateParentStatus(resultData.data['updateParkingSpot']);
+              dynamic returnResult = resultData.data['updateParkingSpot'];
+              returnResult['isUsing'] = _parkingSpotInfo['isUsing'].toLowerCase() == 'true';
+              widget.updateParentStatus(returnResult);
               print(resultData);
             },
           ),

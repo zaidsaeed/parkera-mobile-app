@@ -60,10 +60,36 @@ class _listParkingSpots extends State<listParkingSpots> {
       }
       setState(() {
         parkingSpotsInfo = result.data['parkingSpotsByUserId'];
-        loaded = true;
       });
       return;
     });
+    for(int i=0;i<parkingSpotsInfo.length;i++){
+      _client
+          .query(QueryOptions(
+        documentNode: gql(queryByUid),
+        variables: <String, dynamic>{
+          'nUid': parkingSpotsInfo[i]['id'],
+        },
+      ))
+          .then((result) {
+        if (result.hasException) {
+          print(result.exception.toString());
+        }
+        if (result.data[''] == null) {
+          setState(() {
+            parkingSpotsInfo[i]['isUsing'] = false;
+          });
+        }else{
+          setState(() {
+            parkingSpotsInfo[i]['isUsing'] = true;
+          });
+        }
+        return;
+      });
+      setState(() {
+        loaded = true;
+      });
+    }
   }
 
   @override
@@ -98,6 +124,7 @@ class _listParkingSpots extends State<listParkingSpots> {
                       ),
                       ButtonBar(
                         children: <Widget>[
+                          (!parkingSpotsInfo['isUing'])?
                           FlatButton(
                             child: const Text('Modify',
                                 style: TextStyle(color: Colors.teal)),
@@ -107,7 +134,12 @@ class _listParkingSpots extends State<listParkingSpots> {
                                     this.parkingSpotsInfo[index]=modifiedParkingSpotsInfo;
                                   });
                                 }),
-                          ),
+                          ): null,
+                          (parkingSpotsInfo['isUsing'] == null)?
+                          null:
+                          (parkingSpotsInfo['isUsing'])?
+                          Text("Empty", style: TextStyle(color: Colors.teal)):
+                              Text("Using", style: TextStyle(color: Colors.red)),
                         ],
                       ),
                     ],

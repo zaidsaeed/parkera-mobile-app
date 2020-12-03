@@ -51,6 +51,7 @@ class HomeDrawer extends StatelessWidget {
           ListTile(
             title: Text('Sign out'),
             onTap: (){
+              globals.userid == null;
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) => MyApp()),
                   (Route route) => false);

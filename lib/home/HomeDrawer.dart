@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:parkera/CarInfo/listUserCars.dart';
 import 'package:parkera/addParkingSpot/listParkingSpot.dart';
+import 'package:parkera/main.dart';
+import 'package:parkera/globals.dart' as globals;
 
 
 class HomeDrawer extends StatelessWidget {
@@ -44,6 +46,14 @@ class HomeDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => listParkingSpots()),
               );
+            },
+          ),
+          ListTile(
+            title: Text('Sign out'),
+            onTap: (){
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) => MyApp()),
+                  (Route route) => false);
             },
           ),
         ],

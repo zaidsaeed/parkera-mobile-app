@@ -17,3 +17,11 @@ mutation addBooking(\$userAccountId: Int!,\$parkSpotId: Int!,\$carInfoId: Int!,\
   }
 }
 """;
+
+String deleteOrder = """
+mutation deleteBooking(\$id: Int!) {
+  deleteBooking(id: \$id) {
+    id
+  }
+}
+""";

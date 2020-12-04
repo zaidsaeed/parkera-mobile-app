@@ -211,6 +211,7 @@ class _orderDialog extends State<orderDialog> {
             // or do something with the result.data on completion
             onCompleted: (dynamic resultData) {
               _orderInfo['duration'] = _parkTime;
+              _orderInfo['bid'] = resultData['addBooking']['id'];
               widget.updateParentStatus(_orderInfo);
             },
           ),

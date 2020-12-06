@@ -24,3 +24,11 @@ query bookingsbySpotId(\$parkingSpotId: Int!) {
     }
 }
 """;
+
+String deleteOrder = """
+mutation deleteBooking(\$id: Int!) {
+  deleteBooking(id: \$id) {
+    id
+  }
+}
+""";

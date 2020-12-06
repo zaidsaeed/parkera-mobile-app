@@ -40,6 +40,7 @@ class _googleMapComponent extends State<googleMapComponent> with TickerProviderS
   final Set<Polyline> _polyLines = {};
   final List<Widget> _pages = <Widget>[];
   AnimationController _animationController;
+  int _bId;
 
   String get timerString{
     Duration duration = _animationController.duration * _animationController.value;
@@ -67,6 +68,7 @@ class _googleMapComponent extends State<googleMapComponent> with TickerProviderS
       _isBooked = false;
       _parkposition = null;
       modelWLlicense = "";
+      _bId=0;
     });
     _animationController = AnimationController(
       duration: Duration(hours: 1),
@@ -268,6 +270,7 @@ class _googleMapComponent extends State<googleMapComponent> with TickerProviderS
                         _isBooked = true;
                         _animationController.duration = Duration(hours: orderedSpots['duration']);
                         modelWLlicense = orderedSpots['modelWLlicense'];
+                        _bId = orderedSpots['bid'];
                       });
                       _animationController.reverse(from: _animationController.value == 0.0 ? 1.0 : _animationController.value);
 
@@ -288,7 +291,20 @@ class _googleMapComponent extends State<googleMapComponent> with TickerProviderS
                   padding: EdgeInsets.only(bottom: 10),
                   child: FloatingActionButton.extended(
                     icon: Icon(Icons.stop),
-                    onPressed: () {
+                    onPressed: () async {
+                      final GraphQLClient _client =
+                      graphQLConfiguration.clientToQuery();
+                      final QueryResult r = await _client.query(QueryOptions(
+                          documentNode: gql(deleteOrder),
+                          variables: <String, dynamic>{
+                            'id':_bId,
+                          })).then((result) {
+                        if (result.hasException) {
+                          print(result.exception.toString());
+                        }
+                        return;
+                      });
+
                       setState(() {
                         _isBooked = false;
                         _animationController.stop();
@@ -297,7 +313,9 @@ class _googleMapComponent extends State<googleMapComponent> with TickerProviderS
                         _polyLines.clear();
                         _parkposition.clear();
                         modelWLlicense="";
+                        _bId = 0;
                       });
+
                     },
                     label: Text("stop"),
                     backgroundColor: Colors.red,

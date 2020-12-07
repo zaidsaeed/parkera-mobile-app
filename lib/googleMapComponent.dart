@@ -207,7 +207,7 @@ class _googleMapComponent extends State<googleMapComponent> with TickerProviderS
           ),
           AnimatedPositioned(
             duration: Duration(milliseconds: 500),
-            bottom: 0,
+            bottom: (_pages.length>0)?0:-50,
             child:Visibility(
               visible: (_pages.length>0),
               child: Container(

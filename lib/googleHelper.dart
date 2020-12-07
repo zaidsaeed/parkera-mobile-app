@@ -17,6 +17,13 @@ mutation addBooking(\$userAccountId: Int!,\$parkSpotId: Int!,\$carInfoId: Int!,\
   }
 }
 """;
+String bookingsBySpotId = """
+query bookingsbySpotId(\$parkingSpotId: Int!) {
+      bookingsbySpotId(parkingSpotId: \$parkingSpotId) {
+            id,
+    }
+}
+""";
 
 String deleteOrder = """
 mutation deleteBooking(\$id: Int!) {

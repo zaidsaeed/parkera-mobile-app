@@ -4,6 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import '../services/graphqlConf.dart';
 import 'package:graphql/client.dart';
 import 'package:parkera/home/home.dart';
+import 'package:parkera/googleHelper.dart';
 import 'package:parkera/globals.dart' as globals;
 
 import 'modifyParkingSpot.dart';
@@ -44,7 +45,7 @@ void _updateParkingSpotInfo(context, parkingSpotInfo, updateParentStatus) {
 class _listParkingSpots extends State<listParkingSpots> {
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   var loaded = false;
-  var parkingSpotsInfo;
+  List<dynamic> parkingSpotsInfo;
   void initState() {
     final GraphQLClient _client = graphQLConfiguration.clientToQuery();
     _client
@@ -58,12 +59,46 @@ class _listParkingSpots extends State<listParkingSpots> {
       if (result.hasException) {
         print(result.exception.toString());
       }
+
       setState(() {
-        parkingSpotsInfo = result.data['parkingSpotsByUserId'];
-        loaded = true;
+        parkingSpotsInfo = result.data['parkingSpotsByUserId'].toList();
       });
       return;
+    }).then((value) => {
+        parkingSpotsInfo.forEach((element) {
+          _client
+              .query(QueryOptions(
+            documentNode: gql(bookingsBySpotId),
+            variables: <String, dynamic>{
+              'parkingSpotId': element['id'],
+            },
+          ))
+              .then((result) {
+            if (result.hasException) {
+              print(result.exception.toString());
+            }
+            List<dynamic> returnResult = result.data['bookingsbySpotId'].toList();
+
+            if (returnResult.length==0) {
+              setState(() {
+                element['isUsing'] = false;
+              });
+            }else{
+              setState(() {
+                element['isUsing'] = true;
+              });
+            }
+            return;
+          });
+        })
+    }).then((value) => {
+      setState(() {
+        loaded = true;
+      })
     });
+
+
+
   }
 
   @override
@@ -108,6 +143,12 @@ class _listParkingSpots extends State<listParkingSpots> {
                                   });
                                 }),
                           ),
+                          (parkingSpotsInfo['isUsing'] == null)?
+                          null:
+                          (parkingSpotsInfo['isUsing'])?
+                          Text("Occupied", style: TextStyle(color: Colors.red)):
+                          Text("Vacant", style: TextStyle(color: Colors.teal))
+                              ,
                         ],
                       ),
                     ],

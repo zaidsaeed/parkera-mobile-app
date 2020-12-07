@@ -146,8 +146,8 @@ class _listParkingSpots extends State<listParkingSpots> {
                           (parkingSpotsInfo['isUsing'] == null)?
                           null:
                           (parkingSpotsInfo['isUsing'])?
-                          Text("Using", style: TextStyle(color: Colors.red)):
-                          Text("Empty", style: TextStyle(color: Colors.teal))
+                          Text("Occupied", style: TextStyle(color: Colors.red)):
+                          Text("Vacant", style: TextStyle(color: Colors.teal))
                               ,
                         ],
                       ),
